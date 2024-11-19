@@ -31,6 +31,3 @@
 - フレームワーク：Ruby on Rails
 - JSライブラリ：jQuery
 - IDE：Cloud9
-
-Git確認​
-後程削除予定
