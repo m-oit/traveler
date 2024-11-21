@@ -73,4 +73,7 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.hosts << "organic-giggle-x5qgpgr4ww5hvx95-3000.app.github.dev"
+
 end
