@@ -16,7 +16,7 @@
   <header>
    <% if user_signed_in? %>
     <li>
-     <%= limk_to "ログアウト", destroy_user_session_path, method: :delete %>
+     <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
     </li>
    <% else %>
     <li>
