@@ -79,4 +79,8 @@ Rails.application.configure do
   config.hosts << "organic-giggle-x5qgpgr4ww5hvx95-3000.app.github.dev"
 
   config.hosts << "organic-giggle-x5qgpgr4ww5hvx95-8080.app.github.dev"
+
+  config.hosts << "glowing-garbanzo-g45v5rqgrqrxh97r4-3000.app.github.dev"
+
+  config.hosts << "glowing-garbanzo-g45v5rqgrqrxh97r4-8080.app.github.dev"
 end
