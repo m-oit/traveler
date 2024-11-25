@@ -1,4 +1,6 @@
 class PostImagesController < ApplicationController
+  protect_from_forgery
+  
   def new
     @post_images = PostImage.new
   end
