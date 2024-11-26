@@ -76,7 +76,7 @@ Rails.application.configure do
  
   config.active_job.queue_adapter = :inline
 
-  config.hosts << "improved-telegram-7vrjr59g59r9cp7g5-3000.app.github.dev"
+  config.hosts << "fictional-space-pancake-97qgq59pjp4j399x-3000.app.github.dev"
 
-  config.hosts << "fictional-disco-jj4p475xqx59fqpqg-8080.app.github.dev"
+  config.hosts << "fictional-space-pancake-97qgq59pjp4j399x-8080.app.github.dev"
 end

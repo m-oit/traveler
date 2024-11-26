@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'users/edit'
   get 'users/update'
   get 'users/destroy'
+  
   root to: 'homes#top'
   devise_for :users
   resources :post_images, only: [:new, :create, :index, :show]
