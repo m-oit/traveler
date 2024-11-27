@@ -22,6 +22,7 @@ class PostImagesController < ApplicationController
 
   def show
     @post_image = PostImage.find(params[:id])
+    @post_comment = PostComment.new
   end
   
   def destroy
@@ -32,7 +33,7 @@ class PostImagesController < ApplicationController
     else
     flash[:alert] = "この投稿を削除する権限がありません。"
     end
-    redirect_to post_images_path
+    redirect_to user_path(post_image.user)
   end
 
   private

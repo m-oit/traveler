@@ -18,6 +18,9 @@
         <%= link_to 'Post', new_post_image_path %>
       </li>
       <li>
+        <%= link_to 'mypage', user_path(current_user.id) %>
+    </li>
+      <li>
         <%= link_to "Log out", destroy_user_session_path, method: :delete , class: "text-light" %>
       </li>
     <% else %>

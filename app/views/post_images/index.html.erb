@@ -1,10 +1,15 @@
 <% @post_images.each do |post_image| %>
   <div>
+    <%= link_to post_image_path(post_image.id) do %>
     <%= image_tag post_image.get_image %>
-    <p><%= image_tag 'profile.jpeg' %></p>
+    <% end %>
+    
+    
+    <p>profile_image : <%= image_tag post_image.user.get_profile_image(100,100) %></p>
     <p>title：<%= post_image.title %></p>
     <p>caption：<%= post_image.caption %></p>
     <p>name：<%= post_image.user.name %></p>
+    <p><%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id) %></p>
     <p>Post date：<%= post_image.created_at.strftime('%Y/%m/%d') %></p>
     <% if post_image.user == current_user %>
      <%= link_to "delete", post_image_path(post_image), method: :delete %>
