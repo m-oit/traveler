@@ -13,3 +13,11 @@
  *= require_tree .
  *= require_self
  */
+
+.home-page {
+  color: blue;
+  background-image: url('<%= asset_path("sky.jpg") %>');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
