@@ -6,6 +6,11 @@ Rails.application.routes.draw do
   resources :post_images, only: [:new, :create, :index, :show, :destroy] do
   resource :favorite, only: [:create, :destroy]
   resources :post_comments, only: [:create, :destroy]
-  end
+  
+get '/login', to: 'sessions#new', as: 'login'
+post '/login', to: 'sessions#create'
+delete '/logout', to: 'sessions#destroy', as: 'logout'
+root 'home#index'
+end
   resources :users, only: [:new, :create, :index, :show, :edit, :update, :destroy]
   end

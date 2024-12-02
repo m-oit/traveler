@@ -81,4 +81,6 @@ Rails.application.configure do
   config.hosts << "fictional-space-pancake-97qgq59pjp4j399x-8080.app.github.dev"
   
   config.hosts << "6a14a0cd305e4403a393d3b0922f4dd9.vfs.cloud9.ap-northeast-1.amazonaws.com"
+
+  config.hosts << "urban-space-goggles-69rxr5gj5g4925xxq-8080.app.github.dev"
 end
