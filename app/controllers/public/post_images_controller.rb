@@ -1,4 +1,4 @@
-class PostImagesController < ApplicationController
+class Public::PostImagesController < ApplicationController
   protect_from_forgery
   
   

@@ -1,4 +1,4 @@
-class Users::SessionsController < Devise::SessionsController
+class Public::SessionsController < Devise::SessionsController
 
 def new
  @user = User.new
