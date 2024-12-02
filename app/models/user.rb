@@ -13,10 +13,16 @@ class User < ApplicationRecord
       profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
     end
     profile_image.variant(resize_to_limit: [width, height]).processed
+    end
+    
+    def self.guest
+      find_or_create_by!(email: 'guest@example.com') do |user|
+        user.password = SecureRandom.urlsafe_base64
+        user.name = "ゲスト"
+    end
   end
   
 
   validates :name, presence: true
   validates :email, presence: true
-  
-end
+  end

@@ -28,6 +28,8 @@
           <%= f.submit "サインイン", class:"btn btn-lg btn-block btn-info mt-5" %>
           
         <% end %>
+        <%= link_to "ゲストログイン", users_guest_sign_in_path, method: :post %>
+        
        </div>
     </div>
   </div>

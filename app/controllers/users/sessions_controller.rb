@@ -1,4 +1,4 @@
-class SessionsController < ApplicationController
+class Users::SessionsController < Devise::SessionsController
 
 def new
  @user = User.new
@@ -15,10 +15,16 @@ def create
     render :new
   end
 end
-end
 
 def destroy
     session.delete(:user_id)
     redirect_to root_path, notice: 'ログアウトしました。'
-  end
+end
+
+def guest_sign_in
+    user = User.guest
+    sign_in user
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました。'
+end
+  
 end
