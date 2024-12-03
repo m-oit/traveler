@@ -82,5 +82,5 @@ Rails.application.configure do
   
   config.hosts << "6a14a0cd305e4403a393d3b0922f4dd9.vfs.cloud9.ap-northeast-1.amazonaws.com"
 
-  config.hosts << "legendary-pancake-jj4p475xqx69h9j9-8080.app.github.dev"
+  config.hosts << "bug-free-journey-g45v5rqg795r3v5jq-8080.app.github.dev"
 end

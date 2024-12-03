@@ -1,4 +1,4 @@
-class Public::UsersController < ApplicationController
+class UsersController < ApplicationController
   
   before_action :is_matching_login_user, only: [:edit, :update, :show]
   
@@ -36,5 +36,6 @@ end
       redirect_to post_images_path, alert: "You can only edit or view your own profile."
     end
   end
+
 end
 
