@@ -27,11 +27,14 @@
         <ul class="navbar-nav ml-auto">
           <% if user_signed_in? %>
            <li class="nav-item mb-3 mr-3">
-              <i class="fa-solid fa-briefcase"></i><%= link_to 'Post', new_post_image_path, style: "color: black;" %>
+              <i class="fa-solid fa-briefcase"></i><%= link_to 'New Post', new_post_image_path, style: "color: black;" %>
             </li>
             <li class="nav-item mb-3 mr-3">
-              <i class="fa-solid fa-user"></i><%= link_to 'mypage', user_path(current_user.id), style: "color: black;" %>
-          </li>
+              <i class="fa-solid fa-user"></i><%= link_to 'Profile', user_path(current_user.id), style: "color: black;" %>
+            </li>
+            <li class="nav-item mb-3 mr-3">
+              <i class="fa-regular fa-image"></i></i><%= link_to 'Post List', post_images_path, style: "color: black;" %>
+            </li>
             <li class="nav-item mb-3 mr-3">
               <i class="fa-solid fa-person-running"></i><%= link_to "Log out", destroy_user_session_path, method: :delete, style: "color: black;" %>
             </li>

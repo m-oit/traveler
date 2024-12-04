@@ -3,11 +3,14 @@
     <div class="col-md-5 col-sm-10 mx-2 mx-sm-auto text-center shadow-lg rounded px-0 my-5">
 
       <h5 class="text-dark bg-light py-4 mb-0">Login</h5>
-       <div class="form-body p-4">
+       <div class="form-body pb-4 pl-4 pr-4">
          
          
+         <p class="notice"><%= notice %></p>
+ 　　　　 <p class="alert"><%= alert %></p>
+
          <div class="mx-auto text-center">
-            <p>ユーザー名と<br>パスワードを入力してください。</p>
+           <p>メールアドレスと<br>パスワードを入力してください。</p>
          </div>
 
          
@@ -18,7 +21,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text" aria-hidden="true"><i class="fas fa-user"></i></span>
             </div>
-            <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "ユーザー名" %>
+            <%= f.text_field :email, autofocus: true, class: "form-control", placeholder: "メールアドレス" %>
   
  
           <div class="input-group mb-3">

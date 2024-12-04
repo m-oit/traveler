@@ -5,22 +5,29 @@
   <p>user：<%= image_tag @post_image.user.get_profile_image(100,100) %></p>
   <p>user name：<%= @post_image.user.name %></p>
   <p>Post date：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
+  
   <% if @post_image.user == current_user %>
-    <%= link_to "delete", post_image_path(@post_image), method: :delete %>
+    <%= link_to '編集', edit_post_image_path(@post_image), class: "btn btn-primary" %>
   <% end %>
+
+  <% if @post_image.user == current_user %>
+    <%= link_to "delete", post_image_path(@post_image), method: :delete , data: {confirm: "削除しますか？"}, class: "btn btn-primary"%>
+  <% end %>
+
+
   <% if @post_image.favorited_by?(current_user) %>
   <p>
-    <%= link_to post_image_favorite_path(@post_image), method: :delete do %>
-    ♥<%= @post_image.favorites.count %> いいね
+    <%= button_to post_image_favorites_path(@post_image), method: :delete do %>
+      ♥<%= @post_image.favorites.count %> いいね
     <% end %>
   </p>
   <% else %>
   <p>
-    <%= link_to post_image_favorite_path(@post_image), method: :post do %>
-     ♡<%= @post_image.favorites.count %> いいね
+    <%= button_to post_image_favorites_path(@post_image), method: :post do %>
+      ♡<%= @post_image.favorites.count %> いいね
     <% end %>
   </p>
-  <% end %>
+<% end %>
   
 </div>
 

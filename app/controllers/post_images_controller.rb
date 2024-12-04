@@ -1,7 +1,5 @@
 class PostImagesController < ApplicationController
-  protect_from_forgery
-  
-  
+
   def new
     @post_image = PostImage.new
   end
@@ -24,6 +22,20 @@ class PostImagesController < ApplicationController
     @post_image = PostImage.find(params[:id])
     @post_comment = PostComment.new
   end
+
+  def edit
+    @post_image = PostImage.find(params[:id])
+  end
+
+  def update
+    @post_image = PostImage.find(params[:id])
+    if @post_image.update(post_image_params)
+      redirect_to @post_image, notice: '投稿が更新されました。'
+    else
+      render :edit
+    end
+  end
+
   
   def destroy
     post_image = PostImage.find(params[:id])

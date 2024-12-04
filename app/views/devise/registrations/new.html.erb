@@ -1,3 +1,18 @@
+<% if flash[:alert] %>
+      <div class="flash alert">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+    <% if flash[:notice] %>
+      <div class="flash notice">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <%= yield %>
+
+    </br>
+    </br>
+
 <h2>Sign up</h2>
 
   <%= form_with model: @user, url: user_registration_path do |f| %>

@@ -17,3 +17,11 @@
 </div>
 
 <%= render 'post_images/list', post_images: @post_images %>
+
+<% if user_signed_in? && @user == current_user %>
+  <% unless @user.email == "test@example.com" then %>
+     <div class="mt-3">
+        <%= link_to "退会",user_path(current_user.id), class: "destroy-user", method: :delete, "data-confirm" => "本当に退会しますか？" %>
+     </div>
+  <% end %>
+<% end %>
