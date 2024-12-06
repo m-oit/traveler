@@ -76,11 +76,5 @@ Rails.application.configure do
  
   config.active_job.queue_adapter = :inline
 
-  config.hosts << "fictional-space-pancake-97qgq59pjp4j399x-3000.app.github.dev"
-
-  config.hosts << "fictional-space-pancake-97qgq59pjp4j399x-8080.app.github.dev"
-  
-  config.hosts << "6a14a0cd305e4403a393d3b0922f4dd9.vfs.cloud9.ap-northeast-1.amazonaws.com"
-
-  config.hosts << "bug-free-journey-g45v5rqg795r3v5jq-8080.app.github.dev"
+ config.hosts << "glowing-fiesta-974g5g6wpv62pgxp-8080.app.github.dev"
 end
