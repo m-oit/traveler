@@ -12,13 +12,12 @@
      <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
    </head>
 
-  <body class="d-flex flex-column vh-100">
-    <header>
+    <header class="bg-info">
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
-          <a class="navbar-brand p-3" href="/"><%= image_tag('bag.ico', size: '50×50') %></a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <a class="navbar-brand p-3" href="/">Traveler</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+              aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
          </button>
          
@@ -26,11 +25,12 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           <% if user_signed_in? %>
+          
            <li class="nav-item mb-3 mr-3">
               <i class="fa-solid fa-briefcase"></i><%= link_to 'New Post', new_post_image_path, style: "color: black;" %>
             </li>
             <li class="nav-item mb-3 mr-3">
-              <i class="fa-solid fa-user"></i><%= link_to 'Profile', user_path(current_user.id), style: "color: black;" %>
+              <i class="fa-solid fa-user"></i><%= link_to 'My Page', user_path(current_user.id), style: "color: black;" %>
             </li>
             <li class="nav-item mb-3 mr-3">
               <i class="fa-regular fa-image"></i></i><%= link_to 'Post List', post_images_path, style: "color: black;" %>
@@ -58,29 +58,20 @@
  <main class="mb-auto">
    <%= yield %>
  </main>
-         
-  <footer class="bg-info text-black pt-5 pb-4">
-    <div class="container">
-      <div class="row no-gutters">
-      <div class="col-md-4">
-           <p>旅人の思い出を繋ぐSNS</p>
-           <img src="<%= asset_path('travelerbag.ico') %>" class="img-fluid" style="max-width: 40px;">
-           </div>
-           <div class="col-md-8">
-            <h6 class="text-black mt-2 mb-3">Link</h6>
-            <ul class="p-0 list-unstyled">
-              <li>
-                <a href="" title="About" class="text-black-50">会社概要</a>
-              </li>
-              <li>
-                <a href="" title="License informations" class="text-black-50">プライバシーポリシー</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </footer>
-   
+
+ <footer>
+ <div class="container mt-5">
+   <div class="row">
+     <div class="mx-auto">
+       <p>CopyRight Infratop.inc</p>
+     </div>
+   </div>
+ </div>
+</footer>
+
+</body>
+
+</html>
    
   </body>
 </html>

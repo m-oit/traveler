@@ -7,7 +7,7 @@
   <p>Post date：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
   
   <% if @post_image.user == current_user %>
-    <%= link_to '編集', edit_post_image_path(@post_image), class: "btn btn-primary" %>
+    <%= link_to 'Edit', edit_post_image_path(@post_image), class: "btn btn-primary" %>
   <% end %>
 
   <% if @post_image.user == current_user %>
@@ -34,18 +34,34 @@
 <div>
   <p>コメント件数:<%= @post_image.post_comments.count %></p>
   <% @post_image.post_comments.each do |post_comment| %>
-    <p><%= image_tag post_comment.user.get_profile_image(100,100) %></p>
-    <%= post_comment.user.name %>
-    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+   <div class="border-bottom pb-2 mb-2"></div>
+    <div class="d-flex align-items-center mb-3 border-bottom pb-2">
+      <%= image_tag post_comment.user.get_profile_image(40,40), class: "rounded-circle me-2"  %>
+      <p class="mb-0 me-2">
+      <strong><%= post_comment.user.name %></strong>
+      <span class="ms-2">/</span> 
+      <span class="ms-2"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
+      </p>
+    </div>
+
+    <div class="mb-2">
+     <p><%= post_comment.comment %></p>
+    </div>
+
     <% if post_comment.user == current_user %>
-    <%= link_to "コメントを削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete %>
-    <% end %>
+    <div class="mb-3">
+     <%= link_to "コメントを削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete, class: "text-danger" %>
+    </div>
+     <% end %>
   <% end %>
 </div>
+
 <div>
   <%= form_with model: [@post_image, @post_comment] do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-    <%= f.submit "送信する" %>
+    <%= f.text_area :comment, rows: '5', placeholder: "コメントを入力してください！" %>
+    <div class="form-group mt-3">
+      <%= f.submit "送信する" %>
+    </div>
   <% end %>
 </div>
   

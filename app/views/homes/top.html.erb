@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
  <head>
       <title>Traveler!</title>
       <%= csrf_meta_tags %>
@@ -10,19 +11,14 @@
       <%= stylesheet_pack_tag 'top', media: 'all', 'data-turbolinks-track': 'reload' %>
       </head>
 
-
+    <div>
+      <%= flash[:notice] %>
+    </div>
+    
   <body class="home-page">
-    <h1>Traveler</h1>
-    <% if flash[:alert] %>
-      <div class="flash alert">
-        <%= flash[:alert] %>
-      </div>
-    <% end %>
-    <% if flash[:notice] %>
-      <div class="flash notice">
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
+    <h1>Welcom to Traveler</h1>
+     <p>Where travelers come together to share their travel stories!</p>
+
     <%= yield %>
  </body>
 </html>

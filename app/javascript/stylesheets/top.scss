@@ -1,5 +1,11 @@
 @import '~bootstrap/scss/bootstrap';
 
 h1 {
-    color: blue($color: #000000);
+  font-style: italic;
   }
+
+  a {
+    font-weight: 700;
+    font-style: italic;
+    }
+  
