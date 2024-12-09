@@ -76,5 +76,5 @@ Rails.application.configure do
  
   config.active_job.queue_adapter = :inline
 
- config.hosts << "glowing-fiesta-974g5g6wpv62pgxp-8080.app.github.dev"
+ config.hosts << "studious-carnival-pjg5gwrxp4x6f6px9-8080.app.github.dev"
 end
