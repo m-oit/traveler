@@ -1,5 +1,7 @@
 class PostImagesController < ApplicationController
 
+  before_action :is_matching_login_user, only: [:edit, :update, :destroy]
+
   def new
     @post_image = PostImage.new
   end
@@ -52,6 +54,13 @@ class PostImagesController < ApplicationController
 
   def post_image_params
     params.require(:post_image).permit(:title, :image, :caption)
+  end
+
+  def is_matching_login_user
+    @post_image = PostImage.find(params[:id])
+    if @post_image.user != current_user
+      redirect_to post_images_path, alert: "他のユーザーの投稿を編集・削除する権限がありません。"
+    end
   end
 
 end

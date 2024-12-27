@@ -44,7 +44,7 @@ end
     puts "User: #{user.inspect}"
     puts "params[:id]: #{params[:id]}"
     unless user && user.id == current_user.id
-      redirect_to post_images_path, alert: "You can only edit or view your own profile."
+      redirect_to user_path(current_user), alert: "You can only edit or view your own profile."
     end
   end
 

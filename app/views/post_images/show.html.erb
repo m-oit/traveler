@@ -2,7 +2,9 @@
   <%= image_tag @post_image.get_image %>
   <p>title：<%= @post_image.title %></p>
   <p>caption：<%= @post_image.caption %></p>
-  <p>user：<%= image_tag @post_image.user.get_profile_image(100,100) %></p>
+  <p>user：<%= link_to user_path(@post_image.user) do %>
+    <%= image_tag @post_image.user.get_profile_image(100,100) %>
+  <% end %></p>
   <p>user name：<%= @post_image.user.name %></p>
   <p>Post date：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
   
