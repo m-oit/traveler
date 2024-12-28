@@ -27,4 +27,8 @@
   </div>
 <% end %>
 
+  
+<%= link_to "削除", post_image_path(@post_image), method: :delete , data: {confirm: "削除しますか？"}, class: "btn btn-secondary"%>
+  
+
 <%= link_to '戻る', post_image_path(@post_image), class: "btn btn-secondary" %>

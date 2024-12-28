@@ -1,5 +1,7 @@
-<div>
-  <%= image_tag @post_image.get_image %>
+<div style="text-align: center;">
+  <%= image_tag @post_image.get_image, style: "width: 800px; height: auto;" %>
+</div>
+<div style="margin-left: 40px;">
   <p>title：<%= @post_image.title %></p>
   <p>caption：<%= @post_image.caption %></p>
   <p>user：<%= link_to user_path(@post_image.user) do %>
@@ -7,16 +9,13 @@
   <% end %></p>
   <p>user name：<%= @post_image.user.name %></p>
   <p>Post date：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
-  
+
   <% if @post_image.user == current_user %>
     <%= link_to 'Edit', edit_post_image_path(@post_image), class: "btn btn-primary" %>
   <% end %>
-
   <% if @post_image.user == current_user %>
-    <%= link_to "delete", post_image_path(@post_image), method: :delete , data: {confirm: "削除しますか？"}, class: "btn btn-primary"%>
+    <%= link_to "delete", post_image_path(@post_image), method: :delete, data: {confirm: "削除しますか？"}, class: "btn btn-primary" %>
   <% end %>
-
-
   <% if @post_image.favorited_by?(current_user) %>
   <p>
     <%= button_to post_image_favorites_path(@post_image), method: :delete do %>
@@ -29,42 +28,45 @@
       ♡<%= @post_image.favorites.count %> いいね
     <% end %>
   </p>
-<% end %>
-  
-</div>
-
-<div>
-  <p>コメント件数:<%= @post_image.post_comments.count %></p>
-  <% @post_image.post_comments.each do |post_comment| %>
-   <div class="border-bottom pb-2 mb-2"></div>
-    <div class="d-flex align-items-center mb-3 border-bottom pb-2">
-      <%= image_tag post_comment.user.get_profile_image(40,40), class: "rounded-circle me-2"  %>
-      <p class="mb-0 me-2">
-      <strong><%= post_comment.user.name %></strong>
-      <span class="ms-2">/</span> 
-      <span class="ms-2"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
-      </p>
-    </div>
-
-    <div class="mb-2">
-     <p><%= post_comment.comment %></p>
-    </div>
-
-    <% if post_comment.user == current_user %>
-    <div class="mb-3">
-     <%= link_to "コメントを削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete, class: "text-danger" %>
-    </div>
-     <% end %>
   <% end %>
 </div>
 
-<div>
+
+<div style="margin-left: 40px;">
+  <p>コメント件数:<%= @post_image.post_comments.count %></p>
+  <% @post_image.post_comments.each do |post_comment| %>
+    
+    <div class="d-flex align-items-center mb-3">
+      <%= image_tag post_comment.user.get_profile_image(40,40), class: "rounded-circle me-2" %>
+      <p class="mb-0 me-2">
+        <strong><%= post_comment.user.name %></strong>
+        <span class="ms-2">/</span>
+        <span class="ms-2"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
+      </p>
+    </div>
+    
+
+    <div class="mb-2">
+      <p><%= post_comment.comment %></p>
+    </div>
+
+    
+
+    <% if post_comment.user == current_user %>
+      <div class="mb-3">
+        <%= link_to "コメントを削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete, class: "text-danger btn btn-sm" %>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+
+
+<div style="margin-left: 40px;">
   <%= form_with model: [@post_image, @post_comment] do |f| %>
     <%= f.text_area :comment, rows: '5', placeholder: "コメントを入力してください！" %>
     <div class="form-group mt-3">
       <%= f.submit "送信する" %>
     </div>
   <% end %>
-</div>
-  
+ 
 </div>
