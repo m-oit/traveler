@@ -1,0 +1,21 @@
+<table class='table table-hover table-inverse'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Title</th>
+      <th>Caption</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% post_images.each do |post_image| %>
+      <tr>
+        <td><%= link_to(post_image.user) do %>
+          <%= image_tag post_image.user.get_profile_image(50, 50), class: "rounded-circle" %>
+        <% end %></td>
+        <td><%= link_to post_image.title, post_image, class: "post_image_#{post_image.id}" %></td>
+        <td><%= post_image.caption %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

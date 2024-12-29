@@ -10,10 +10,12 @@ Rails.application.routes.draw do
     root 'homes#top', as: 'top'
     get 'about' => 'homes#about', as: 'about'
     
-    resources :post_images, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
+      resources :post_images, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
       resource :favorites, only: [:create, :destroy]
       resources :post_comments, only: [:create, :destroy]
     end
+
+    get '/search', to: 'searches#search', as: 'search'
 
     resources :users, only: [:show, :edit, :update, :destroy]
     
