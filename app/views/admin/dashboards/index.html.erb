@@ -2,8 +2,8 @@
 <ul>
   <% @users.each do |user| %>
     <li>
-      <%= user.name %> - <%= user.email %>
-      <%= link_to '削除', admin_user_path(user), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+      <%= link_to user.name, user_path(user) %> - <%= user.email %>
+      <%= link_to '退会', admin_user_path(user), method: :delete, data: { confirm: '本当に退会させますか？' } %>
     </li>
   <% end %>
 </ul>
