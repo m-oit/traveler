@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  
+  before_action :authenticate_user!
   before_action :is_matching_login_user, only: [:edit, :update]
+  before_action :ensure_guest_user, only: [:edit]
 
   def show
     @user = User.find(params[:id])
@@ -47,6 +48,13 @@ end
       redirect_to user_path(current_user), alert: "You can only edit or view your own profile."
     end
   end
+
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.guest_user?
+      redirect_to user_path(current_user) , notice: "ゲストユーザーはプロフィール編集画面へ遷移できません。"
+    end
+  end 
 
 end
 
