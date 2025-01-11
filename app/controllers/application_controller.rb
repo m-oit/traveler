@@ -1,6 +1,4 @@
 class ApplicationController < ActionController::Base
-  
-  protect_from_forgery
 
   before_action :authenticate_user!, except: [:top, :about], unless: :admin_controller?
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -21,7 +19,7 @@ class ApplicationController < ActionController::Base
   private
  
   def admin_controller?
-    self.class.module_parent_name == 'Admin'
+    self.class.to_s.start_with?('Admin')
   end
 
     protected

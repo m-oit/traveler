@@ -1,0 +1,21 @@
+<h1>User</h1>
+
+<div>
+  <% if notice %>
+    <div class="notice"><%= notice %></div>
+  <% elsif alert %>
+    <div class="alert"><%= alert %></div>
+  <% end %>
+
+  <%= yield %>
+
+  <h4><%= @user.name %></h4> 
+  <%= image_tag @user.get_profile_image(100, 100) %>
+
+  <% if @user == current_user %>
+    <p><%= link_to "Edit Profile", edit_user_path(@user) %></p>
+  <% end %>
+</div>
+
+<%= render 'admin/post_images/list', post_images: @post_images %>
+<%= paginate @post_images %>

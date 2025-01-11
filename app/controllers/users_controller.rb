@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  
   before_action :is_matching_login_user, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit]
 
@@ -28,6 +28,10 @@ end
     @user.destroy
     flash[:notice] = "退会手続きが完了しました。ご利用いただきありがとうございました！"
     redirect_to new_user_registration_path
+  end
+
+  def admin_or_signed_in?
+    current_user.present? && current_user.admin?
   end
 
    private

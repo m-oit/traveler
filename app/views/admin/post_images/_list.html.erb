@@ -1,9 +1,7 @@
-<p>テスト</p>
-
 <div class="card-list-container py-3">
   <% post_images.each do |post_image| %>
     <div class="card w-75 mx-auto mt-3 shadow-sm" style="max-width: 300px;">
-      <%= link_to post_image_path(post_image.id) do %>
+      <%= link_to admin_post_image_path(post_image.id) do %>  
         <%= image_tag post_image.get_image, class: "card-img-top", style: "max-height: 150px; width: 100%; object-fit: contain;" %>
       <% end %>
       <div class="card-body p-2">
@@ -13,14 +11,14 @@
           </div>
           <div class="col-9">
             <p class="card-title mb-1" style="font-size: 14px;">
-              <%= link_to post_image_path(post_image.id), class: "text-dark fw-bold" do %>
+              <%= link_to admin_post_image_path(post_image.id), class: "text-dark fw-bold" do %>  
                 <%= post_image.title %>
               <% end %>
             </p>
             <p class="card-text mb-0" style="font-size: 12px;">Caption: <%= post_image.caption %></p>
             <p class="text-muted" style="font-size: 12px;">
-              <i class="fas fa-user"></i> By <%= link_to post_image.user.name, user_path(post_image.user.id) %>|
-              <%= link_to "#{post_image.post_comments.count} コメント", post_image_path(post_image.id), class: "text-dark" %>
+              <i class="fas fa-user"></i> By <%= link_to post_image.user.name, admin_user_path(post_image.user) %> | 
+              <%= link_to "#{post_image.post_comments.count} コメント", admin_post_image_path(post_image.id), class: "text-dark" %> 
             </p>
           </div>
         </div>

@@ -1,0 +1,62 @@
+<div style="text-align: center;">
+  <%= image_tag @post_image.get_image, style: "width: 400px; height: auto;" %>
+</div>
+
+<div style="margin-left: 40px;">
+
+  <p>title：<%= @post_image.title %></p>
+  <p>caption：<%= @post_image.caption %></p>
+
+  <p>user：<%= link_to admin_user_path(@post_image.user) do %>
+    <%= image_tag @post_image.user.get_profile_image(100, 100), class: 'profile-image' %>
+  <% end %></p>
+
+  <p>user name：<%= @post_image.user.name %></p>
+  <p>Post date：<%= @post_image.created_at.strftime('%Y/%m/%d') %></p>
+
+  <% if @post_image.user == current_user || (current_user && current_user.admin?) %>
+    <%= link_to 'Edit', edit_post_image_path(@post_image), class: "btn btn-primary" %>
+  <% end %>
+  
+  <% if @post_image.user == current_user || (current_user && current_user.admin?) %>
+    <%= link_to "delete", post_image_path(@post_image), method: :delete, data: { confirm: "削除しますか？" }, class: "btn btn-primary" %>
+  <% end %>
+
+  <% if current_user && @post_image.favorited_by?(current_user) %>
+  <p>
+    <%= button_to post_image_favorites_path(@post_image), method: :delete do %>
+      ♥<%= @post_image.favorites.count %> いいね
+    <% end %>
+  </p>
+  <% elsif current_user %>
+  <p>
+    <%= button_to post_image_favorites_path(@post_image), method: :post do %>
+      ♡<%= @post_image.favorites.count %> いいね
+    <% end %>
+  </p>
+  <% end %>
+</div>
+
+<div style="margin-left: 40px;">
+  <p>コメント件数:<%= @post_image.post_comments.count %></p>
+
+  <% @post_image.post_comments.each do |post_comment| %>
+    <div class="d-flex align-items-center mb-3">
+      <%= image_tag post_comment.user.get_profile_image(40,40), class: "rounded-circle me-2" %>
+      <p class="mb-0 me-2">
+        <strong><%= post_comment.user.name %></strong>
+        <span class="ms-2">/</span>
+        <span class="ms-2"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
+      </p>
+    </div>
+
+    <div class="mb-2">
+      <p><%= post_comment.comment %></p>
+    </div>
+
+    <div class="mb-3">
+      <%= link_to "コメントを削除", admin_post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete, data: { confirm: "削除しますか？" }, class: "text-danger btn btn-sm" %>
+    </div>
+
+  <% end %>
+</div>
