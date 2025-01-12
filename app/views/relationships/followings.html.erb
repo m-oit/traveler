@@ -1,0 +1,15 @@
+<h1>フォローしているユーザー</h1>
+
+<% if @followings.any? %>
+  <ul>
+    <% @followings.each do |followed_user| %>
+      <li>
+        <%= image_tag followed_user.get_profile_image(50, 50) %>
+        <%= followed_user.name %> 
+        <%= link_to "プロフィール", user_path(followed_user) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>フォローしているユーザーはいません。</p>
+<% end %>

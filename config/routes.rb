@@ -19,7 +19,15 @@ Rails.application.routes.draw do
 
     get '/search', to: 'searches#search', as: 'search'
 
-    resources :users, only: [:show, :edit, :update, :destroy]
+    resources :users, only: [:show, :edit, :update, :destroy] do
+      resource :relationships, only: [:create, :destroy]
+      get "followings" => "relationships#followings", as: "followings"
+      get "followers" => "relationships#followers", as: "followers"
+      
+      member do
+        get :likes
+      end
+    end
     
     devise_scope :user do
       post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
