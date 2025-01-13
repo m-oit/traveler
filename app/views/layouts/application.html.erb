@@ -16,7 +16,7 @@
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container">
           <a class="navbar-brand p-3" href="/">Traveler</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+          <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
               aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
          </button>
@@ -34,6 +34,15 @@
             </li>
             <li class="nav-item mb-3 mr-3">
               <i class="fa-regular fa-image"></i></i><%= link_to 'Post List', post_images_path, style: "color: black;" %>
+            </li>
+            <li class="nav-item mb-3 mr-3">
+              <i class="fa-solid fa-users"></i><%= link_to 'User List', users_path, style: "color: black;" %>
+            </li>
+            <li class="nav-item mb-3 mr-3">
+            <i class="fa-regular fa-heart"></i><%= link_to 'Likes', likes_user_path(current_user), style: "color: black;" %>
+            </li>
+            <li class="nav-item mb-3 mr-3">
+            <i class="fa-solid fa-user-group"></i><%= link_to 'Followings', user_followings_path(current_user), style: "color: black;" %>
             </li>
             <li class="nav-item mb-3 mr-3">
               <i class="fa-solid fa-person-running"></i><%= link_to "Log out", destroy_user_session_path, method: :delete, style: "color: black;" %>

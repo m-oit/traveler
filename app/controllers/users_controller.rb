@@ -9,6 +9,10 @@ class UsersController < ApplicationController
     @post_images = @user.post_images.page(params[:page])
   end
 
+  def index
+    @users = User.all
+  end
+  
   def edit
    @user = User.find(params[:id])
   

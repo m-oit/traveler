@@ -1,15 +1,22 @@
-<h1>フォローしているユーザー</h1>
+<h3 class="text-center text-dark bg-light p-3 rounded shadow-sm border border-info mb-5">フォロー中</h3>
 
 <% if @followings.any? %>
-  <ul>
+  <div class="d-flex flex-column">
     <% @followings.each do |followed_user| %>
-      <li>
-        <%= image_tag followed_user.get_profile_image(50, 50) %>
-        <%= followed_user.name %> 
-        <%= link_to "プロフィール", user_path(followed_user) %>
-      </li>
+      <div class="d-flex align-items-center mb-3">
+
+        <%= image_tag followed_user.get_profile_image(50, 50), class: "rounded-circle me-3" %>
+
+        <div class="name-container" style="margin-left: 20px; margin-right: 20px;">
+          <h5 class="mb-0"><%= followed_user.name %></h5>
+        </div>
+        
+        <div class="profile-container" style="margin-left: 20px;">
+          <%= link_to "プロフィール", user_path(followed_user), class: "btn btn-primary btn-sm" %>
+        </div>
+      </div>
     <% end %>
-  </ul>
+  </div>
 <% else %>
   <p>フォローしているユーザーはいません。</p>
 <% end %>

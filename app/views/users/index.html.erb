@@ -1,1 +1,16 @@
-<h1>indexページ</h1>
+<table class="table">
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <%= image_tag user.get_profile_image(50, 50), size: '50x50', class: 'mr-2' %> <!-- アイコンを名前の左横に表示 -->
+          <%= user.name %>
+        </td>
+        <td>
+          <%= link_to 'Show', user_path(user), class: 'btn btn-info' %>
+        </td>
+    <% end %>
+  </tbody>
+</table>
+

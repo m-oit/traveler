@@ -9,10 +9,12 @@
         <h1 class="mt-5">Welcome to Traveler</h1>
         <p>Where travelers come together to share their travel stories!</p>
         <% unless user_signed_in? %>
-          <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, class: "btn btn-secondary btn-sm btn-block mb-3 sign_in", method: :post %>
           <%= link_to 'Sign In', new_user_session_path, class: 'btn btn-primary' %>
           <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-success' %>
-        <% end %>
+          <div>
+          <%= link_to "ゲストログイン（閲覧用）", users_guest_sign_in_path, class: "btn btn-secondary btn-sm mt-3 sign_in py-1 px-2", method: :post %>
+          </div>
+          <% end %>
       </div>
     </div>
   </div>
