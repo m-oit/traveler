@@ -4,7 +4,7 @@ class AddAdminToUsers < ActiveRecord::Migration[6.1]
       add_column :users, :admin, :boolean
     end
     unless column_exists?(:users, :default)
-      add_column :users, :default, :false
+      add_column :users, :default, :boolean
     end
   end
 end
