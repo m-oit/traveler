@@ -66,6 +66,7 @@
 
     <% if post_comment.user == current_user %>
       <div class="mb-3">
+        <%= link_to "コメントを編集", edit_post_image_post_comment_path(post_comment.post_image, post_comment), class: "text-primary btn btn-sm" %>
         <%= link_to "コメントを削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete, class: "text-danger btn btn-sm" %>
       </div>
     <% end %>

@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     
       resources :post_images, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
       resource :favorites, only: [:create, :destroy]
-      resources :post_comments, only: [:create, :destroy]
+      resources :post_comments, only: [:create, :destroy, :edit, :update]
     end
 
     get '/search', to: 'searches#search', as: 'search'
