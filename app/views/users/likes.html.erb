@@ -4,10 +4,11 @@
   <% @liked_posts.each do |post| %>
     <div class="card mb-3">
       <div class="d-flex align-items-center">
-        <!-- 画像の表示 -->
-        <%= image_tag url_for(post.get_image), class: "img-thumbnail me-3", style: "width: 100px; height: 100px; object-fit: cover;" %>
+
+        <%= link_to post_image_path(post) do %>
+         <%= image_tag url_for(post.get_image), class: "img-thumbnail me-3", style: "width: 100px; height: 100px; object-fit: cover;" %>
+        <% end %>
         
-        <!-- タイトルとキャプション -->
         <div>
           <h5><%= link_to post.title, post_image_path(post), class: "text-decoration-none text-dark" %></h5>
           <p><%= post.caption %></p>
