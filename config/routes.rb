@@ -18,12 +18,13 @@ Rails.application.routes.draw do
     end
 
     get '/search', to: 'searches#search', as: 'search'
+    resources :groups, only: [:new, :index, :show, :create, :edit, :update]
 
-    resources :users, only: [:show, :index, :edit, :update, :destroy] do
+      resources :users, only: [:show, :index, :edit, :update, :destroy] do
       resource :relationships, only: [:create, :destroy]
       get "followings" => "relationships#followings", as: "followings"
       get "followers" => "relationships#followers", as: "followers"
-      
+
       member do
         get :likes
       end
