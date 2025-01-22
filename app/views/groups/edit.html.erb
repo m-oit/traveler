@@ -1,0 +1,42 @@
+<h1>グループ情報を編集</h1>
+
+<%= form_with model: @group, local: true, html: { enctype: 'multipart/form-data' } do |form| %>
+  <% if @group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@group.errors.count, "error") %>が発生しました:</h2>
+      <ul>
+        <% @group.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name, 'グループ名' %>
+    <%= form.text_field :name, id: :group_name, placeholder: "グループ名を入力してください" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :introduction, '紹介文' %>
+    <%= form.text_area :introduction, id: :group_introduction, placeholder: "グループの紹介文を入力してください" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :image, 'グループ画像' %>
+    <% if @group.image.attached? %>
+      <div>
+        <%= image_tag @group.image.variant(resize: "200x200") %> <!-- 画像のプレビュー -->
+        <br>
+        <%= check_box_tag :remove_image, "1" %> 画像を削除する
+      </div>
+    <% end %>
+    <%= form.file_field :image %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit '更新する' %>
+  </div>
+<% end %>
+
+<%= link_to 'キャンセル', group_path(@group) %>

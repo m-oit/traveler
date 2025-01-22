@@ -1,0 +1,22 @@
+<h1 class="text-center mb-4">グループ一覧</h1>
+
+<%= link_to '新しいグループを作成', new_group_path, class: 'btn btn-primary mb-3' %>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+  <% @groups.each do |group| %>
+    <div class="col mb-4"> <!-- ここに mb-4 を追加して縦の間隔を開ける -->
+      <div class="card h-100">
+        <% if group.image.attached? %>
+          <%= image_tag group.image, class: 'card-img-top', style: 'max-height: 200px; object-fit: contain; width: 100%;' %>
+        <% else %>
+          <%= image_tag 'no_image.jpg', class: 'card-img-top', style: 'max-height: 200px; object-fit: contain; width: 100%;' %>
+        <% end %>
+        <div class="card-body">
+          <h5 class="card-title"><%= group.name %></h5>
+          <p class="card-text"><%= truncate(group.introduction, length: 100) %></p>
+          <%= link_to '詳細を見る', group_path(group), class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -24,7 +24,6 @@ class GroupsController < ApplicationController
     else
       render 'new'
     end
-
   end
 
   def edit
@@ -51,4 +50,4 @@ class GroupsController < ApplicationController
     end
   end
 end
-end
+

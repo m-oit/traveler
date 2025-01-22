@@ -1,6 +1,7 @@
 class Group < ApplicationRecord
     has_one_attached :post_image
-    belongs_to :owner, class_name: 'User'　
+    has_one_attached :image
+    belongs_to :owner, class_name: 'User'
     has_many :group_users, dependent: :destroy
   
     validates :name, presence: true
@@ -14,4 +15,3 @@ class Group < ApplicationRecord
       owner.id == user.id
     end
   end
-end
