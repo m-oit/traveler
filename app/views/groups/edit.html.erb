@@ -23,15 +23,15 @@
   </div>
 
   <div class="field">
-    <%= form.label :image, 'グループ画像' %>
-    <% if @group.image.attached? %>
+    <%= form.label :post_image, 'グループ画像' %> <!-- image → post_image に変更 -->
+    <% if @group.post_image.attached? %>
       <div>
-        <%= image_tag @group.image.variant(resize: "200x200") %> <!-- 画像のプレビュー -->
+        <%= image_tag @group.post_image.variant(resize: "200x200") %> <!-- 画像のプレビュー -->
         <br>
         <%= check_box_tag :remove_image, "1" %> 画像を削除する
       </div>
     <% end %>
-    <%= form.file_field :image %>
+    <%= form.file_field :post_image %> <!-- image → post_image に変更 -->
   </div>
 
   <div class="actions">

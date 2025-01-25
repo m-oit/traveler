@@ -2,11 +2,12 @@ class UsersController < ApplicationController
   
   before_action :is_matching_login_user, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit]
-  before_action :set_user, only: [:likes]
+  before_action :set_user, only: [:likes, :show, :groups]
 
   def show
     @user = User.find(params[:id])
     @post_images = @user.post_images.page(params[:page])
+    @groups = @user.groups
   end
 
   def index
@@ -28,10 +29,14 @@ class UsersController < ApplicationController
   end
 end
 
-def likes
-  @user = User.find(params[:id])
-  @liked_posts = @user.liked_posts
-end
+  def likes
+    @user = User.find(params[:id])
+    @liked_posts = @user.liked_posts
+  end
+
+  def groups
+    @groups = @user.groups
+  end
 
   def destroy
     @user = User.find(params[:id])

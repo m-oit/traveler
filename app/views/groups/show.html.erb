@@ -1,20 +1,55 @@
-<h1><%= @group.name %>の詳細</h1>
+<h1><%= @group.name %></h1>
+
+<% if @group.post_image.attached? %>
+  <div class="group-image">
+    <%= image_tag @group.post_image, alt: 'Group Image' %>
+  </div>
+<% else %>
+  <div class="group-image">
+    <%= image_tag 'no_image.jpg', alt: 'No image available' %>
+  </div>
+<% end %>
+
+<p><strong>オーナー:</strong>
+  <%= link_to user_path(@group.owner) do %>
+    <% if @group.owner.profile_image.attached? %>
+      <%= image_tag @group.owner.profile_image, alt: "#{@group.owner.name} Profile", class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+    <% else %>
+      <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+    <% end %>
+    <%= @group.owner.name %>
+  <% end %>
+</p>
 
 <div class="group-details">
   <p><strong>紹介文:</strong> <%= @group.introduction %></p>
 
-  <% if @group.image.attached? %>
-    <div class="group-image">
-      <%= image_tag @group.image, alt: 'Group Image' %>
-    </div>
+  <p><strong>参加ユーザー一覧</strong>
+  <% if @group.users.any? %>
+    <ul>
+      <% @group.users.each do |user| %>
+        <li>
+          <%= link_to user_path(user) do %>
+            <% if user.profile_image.attached? %>
+              <%= image_tag user.profile_image, alt: "#{user.name} Profile", class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+            <% else %>
+              <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+            <% end %>
+            <%= user.name %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
   <% else %>
-    <div class="group-image">
-      <%= image_tag 'no_image.jpg', alt: 'No image available' %>
-    </div>
+    <p>メンバーはいません。</p>
   <% end %>
-
-  <p><strong>オーナー:</strong> <%= @group.owner.name %></p>
 </div>
+
+<% if current_user.group_users.exists?(group_id: @group.id) %>
+  <%= button_to 'グループから退出', group_group_user_path(@group, current_user.group_users.find_by(group_id: @group.id)), method: :delete, class: 'btn btn-danger' %>
+<% elsif !@group.is_owned_by?(current_user) %>
+  <%= button_to 'グループに参加', group_group_users_path(@group), method: :post, class: 'btn btn-primary' %>
+<% end %>
 
 <div class="group-actions">
   <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>

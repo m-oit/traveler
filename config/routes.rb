@@ -24,14 +24,20 @@ Rails.application.routes.draw do
       resource :relationships, only: [:create, :destroy]
       get "followings" => "relationships#followings", as: "followings"
       get "followers" => "relationships#followers", as: "followers"
+      
 
       member do
         get :likes
+        get :groups, to: "users#groups", as: "groups"
       end
     end
     
     devise_scope :user do
       post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
+  end
+
+  resources :groups, only: [:new, :index, :show, :create, :edit, :update] do
+    resources :group_users, only: [:show, :create, :destroy]
   end
 
   namespace :admin do

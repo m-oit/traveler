@@ -1,7 +1,7 @@
 <h1>user</h1>
 
 <div class="row">
-  <!-- プロフィール部分 -->
+
   <div class="col-12 col-md-3">
     <h4><%= @user.name %></h4>
     <%= image_tag @user.get_profile_image(100,100) %>
@@ -32,8 +32,8 @@
     </div>
 
     <%= link_to 'グループ新規作成', new_group_path, class: 'btn btn-primary' %> 
-<%= link_to 'グループ一覧', groups_path, class: 'btn btn-secondary' %>
-
+    <%= link_to 'グループ一覧', groups_path, class: 'btn btn-secondary' %>
+    <%= link_to 'My Groups', groups_user_path(@user), class: 'btn btn-secondary' %>
 
     <% if user_signed_in? && @user == current_user %>
       <% unless @user.email == "test@example.com" then %>
@@ -42,12 +42,12 @@
         </div>
       <% end %>
     <% end %>
+    </div>
   
 
 
-  <div class="col-12 col-md-7" style="margin-left: 23px;"> <!-- 5mm分右に移動 -->
-    <div class="card-list-container" style="max-width: 80%;"> 
+    <div class="col-12 col-md-6" style="margin-left: 20px; margin-right: 20px;">
+    <div class="card-list-container" style="max-width: 100%;"> 
       <%= render 'post_images/list', post_images: @post_images %>
     </div>
   </div>
-</div>

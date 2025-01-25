@@ -8,7 +8,11 @@ class GroupsController < ApplicationController
 
   def index
     @post_image = PostImage.new
-    @groups = Group.all
+    if params[:search].present?
+      @groups = Group.joins(:owner).where('groups.name LIKE ? OR users.name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+    else
+      @groups = Group.all
+    end
   end
 
   def show
@@ -40,7 +44,7 @@ class GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :introduction, :image)
+    params.require(:group).permit(:name, :introduction, :post_image)
   end
 
   def ensure_correct_user
