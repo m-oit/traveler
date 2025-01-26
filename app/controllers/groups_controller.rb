@@ -16,8 +16,12 @@ class GroupsController < ApplicationController
   end
 
   def show
-    @post_image = PostImage.new
     @group = Group.find(params[:id])
+    @group_posts = @group.group_posts
+    @group_post = @group.group_posts.new
+    @group_posts.each do |group_post|
+      group_post.user ||= User.new
+    end
   end
   
   def create
@@ -47,6 +51,7 @@ class GroupsController < ApplicationController
     params.require(:group).permit(:name, :introduction, :post_image)
   end
 
+  
   def ensure_correct_user
     @group = Group.find(params[:id])
     unless @group.owner_id == current_user.id

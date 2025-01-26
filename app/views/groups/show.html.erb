@@ -1,21 +1,131 @@
-<h1><%= @group.name %></h1>
+<div class="group-header" style="display: flex; align-items: center; gap: 10px;">
+  <% if @group.post_image.attached? %>
+    <%= image_tag @group.post_image, alt: 'Group Image', class: 'group-thumbnail', style: 'width: 40px; height: 40px; object-fit: cover; border-radius: 50%;' %>
+  <% else %>
+    <%= image_tag 'no_image.jpg', alt: 'No image available', class: 'group-thumbnail', style: 'width: 40px; height: 40px; object-fit: cover; border-radius: 50%;' %>
+  <% end %>
+  <h1 style="margin: 0;"><%= @group.name %></h1>
+</div>
 
-<% if @group.post_image.attached? %>
-  <div class="group-image">
-    <%= image_tag @group.post_image, alt: 'Group Image' %>
+
+
+
+
+<%= form_with model: [@group, @group_post], local: true do |f| %>
+  <div class="form-group">
+    <%= f.label :image, "画像を選択" %>
+    <%= f.file_field :image, required: true %>
   </div>
-<% else %>
-  <div class="group-image">
-    <%= image_tag 'no_image.jpg', alt: 'No image available' %>
-  </div>
+  <%= f.submit "投稿する", class: "btn btn-primary" %>
 <% end %>
 
-<p><strong>オーナー:</strong>
+<h2>投稿された画像</h2>
+
+<% if @group_posts.any? %>
+  <div class="row">
+    <% @group_posts.each do |group_post| %>
+      <% if group_post.image.attached? %>
+        <div class="col-4 mb-4">
+          <div class="card">
+            <div class="card-body">
+              <%= link_to group_group_post_path(@group, group_post) do %>
+                <%= image_tag group_post.image, class: "card-img-top group-post-image" %>
+              <% end %>
+
+              <div class="d-flex align-items-center mt-2"> 
+                <% if group_post.user.profile_image.attached? %>
+                  <%= image_tag group_post.user.profile_image, alt: "#{group_post.user.name} Profile", class: "profile-thumbnail", style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+                <% else %>
+                  <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+                <% end %>
+                <p class="card-title mb-0" style="font-size: 0.9rem;"><%= group_post.user.name %></p> 
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% else %>
+  <p>投稿された画像はありません。</p>
+<% end %>
+
+
+
+
+
+
+<% if @group.users.include?(current_user) || @group.owner == current_user %>
+  <div class="group-board mt-4">
+    <h4 class="mb-3">グループ掲示板</h4>
+
+    <div class="comments-container" style="max-height: 300px; overflow-y: auto; border: 2px solid #000; border-radius: 8px; padding: 20px; background-color: #f8f9fa; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+      <% @group.board_comments.order(created_at: :asc).each do |comment| %>
+        <div class="comment mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 15px;">
+          <div class="d-flex align-items-center mb-2">
+            <% if comment.user.profile_image.attached? %>
+              <%= image_tag comment.user.profile_image, class: "rounded-circle me-2", alt: "#{comment.user.name} Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
+            <% else %>
+              <%= image_tag 'no_image.jpg', class: "rounded-circle me-2", alt: "No Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
+            <% end %>
+            <strong><%= comment.user.name %></strong>
+          </div>
+          <p class="mb-2"><%= comment.body %></p>
+          <% if comment.user == current_user || @group.owner == current_user %>
+            <div class="text-end">
+              <%= link_to '削除', group_board_comment_path(@group, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger btn-sm' %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <% if @group.users.include?(current_user) %> 
+   
+      <div class="mt-4">
+        <%= form_with model: [@group, BoardComment.new], local: true do |f| %>
+          <div class="form-group mb-3">
+            <%= f.text_area :body, placeholder: 'コメントを追加する...', class: 'form-control', rows: 3 %>
+          </div>
+          <%= f.submit '投稿', class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="group-board mt-4">
+    <h2 class="mb-3">グループ掲示板</h2>
+
+    <div class="comments-container" style="max-height: 300px; overflow-y: auto; border: 2px solid #000; border-radius: 8px; padding: 20px; background-color: #f8f9fa; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+      <% @group.board_comments.order(created_at: :asc).each do |comment| %>
+        <div class="comment mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 15px;">
+          <div class="d-flex align-items-center mb-2">
+            <% if comment.user.profile_image.attached? %>
+              <%= image_tag comment.user.profile_image, class: "rounded-circle me-2", alt: "#{comment.user.name} Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
+            <% else %>
+              <%= image_tag 'no_image.jpg', class: "rounded-circle me-2", alt: "No Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
+            <% end %>
+            <strong><%= comment.user.name %></strong>
+          </div>
+          <p class="mb-2"><%= comment.body %></p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <strong class="mt-4 mb-5">グループに参加するとコメントを投稿できます！</strong>
+<% end %>
+
+
+
+
+
+
+<p class="mt-5"><strong>オーナー:</strong>
   <%= link_to user_path(@group.owner) do %>
     <% if @group.owner.profile_image.attached? %>
-      <%= image_tag @group.owner.profile_image, alt: "#{@group.owner.name} Profile", class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+      <%= image_tag @group.owner.profile_image, alt: "#{@group.owner.name} Profile", class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;' %>
     <% else %>
-      <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+      <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;' %>
     <% end %>
     <%= @group.owner.name %>
   <% end %>
@@ -31,9 +141,9 @@
         <li>
           <%= link_to user_path(user) do %>
             <% if user.profile_image.attached? %>
-              <%= image_tag user.profile_image, alt: "#{user.name} Profile", class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+              <%= image_tag user.profile_image, alt: "#{user.name} Profile", class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;' %>
             <% else %>
-              <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px;' %>
+              <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;' %>
             <% end %>
             <%= user.name %>
           <% end %>

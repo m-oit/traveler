@@ -17,4 +17,18 @@ class GroupUsersController < ApplicationController
     group_user.destroy
     redirect_to request.referer
   end
+
+  def update
+    if @group.update(group_params)
+      redirect_to @group, notice: 'グループ画像が更新されました！'
+    else
+      render :edit
+    end
+  end
+  
+  private
+  
+  def group_params
+    params.require(:group).permit(:name, :introduction, :post_image)
+  end
 end

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
  
+  get 'group_posts/new'
+  get 'group_posts/create'
+  get 'group_posts/index'
+  get 'group_posts/show'
   namespace :admin do
     get 'post_images/show'
   end
@@ -38,13 +42,15 @@ Rails.application.routes.draw do
 
   resources :groups, only: [:new, :index, :show, :create, :edit, :update] do
     resources :group_users, only: [:show, :create, :destroy]
+    resources :board_comments, only: [:create, :destroy]
+    resources :group_posts, only: [:new, :create, :index, :show,:destroy]
   end
 
   namespace :admin do
     resources :dashboards, only: [:index, :show]
     resources :users, only: [:show, :destroy]
     resources :post_images, only: [:show, :destroy] do
-      resources :post_comments, only: [:destroy]
+    resources :post_comments, only: [:destroy]
     end
   end
 
