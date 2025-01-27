@@ -79,6 +79,7 @@
         </div>
       <% end %>
     </div>
+    
 
     <% if @group.users.include?(current_user) %> 
    
@@ -155,15 +156,20 @@
   <% end %>
 </div>
 
-<% if current_user.group_users.exists?(group_id: @group.id) %>
-  <%= button_to 'グループから退出', group_group_user_path(@group, current_user.group_users.find_by(group_id: @group.id)), method: :delete, class: 'btn btn-danger' %>
-<% elsif !@group.is_owned_by?(current_user) %>
-  <%= button_to 'グループに参加', group_group_users_path(@group), method: :post, class: 'btn btn-primary' %>
+<% if @group.group_users.exists?(user_id: current_user.id) %>
+  <%= link_to 'グループから退出', group_group_user_path(@group, current_user), method: :delete, data: { confirm: '本当にグループから退出しますか？' } %>
+<% elsif @group.permits.exists?(user_id: current_user.id) %>
+  <%= link_to '申請取消', group_permits_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
+<% elsif @group.owner != current_user %>
+  <%= link_to '加入申請', group_permits_path(@group), method: :post, class: "btn btn-sm btn-success" %>
 <% end %>
+
 
 <div class="group-actions">
   <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>
   <% if @group.is_owned_by?(current_user) %>
+  <%= link_to "承認待ち一覧", group_permits_path(@group), class: "dropdown-item text-secondary bg-transparent" %>
     <%= link_to 'グループを編集', edit_group_path(@group), class: 'btn btn-warning' %>
-  <% end %>
+    <%= link_to 'グループ削除', group_path(@group), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "本当に削除しますか？" } %>
+    <% end %>
 </div>

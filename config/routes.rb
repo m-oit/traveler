@@ -40,19 +40,20 @@ Rails.application.routes.draw do
       post "users/guest_sign_in", to: "users/sessions#guest_sign_in"
   end
 
-  resources :groups, only: [:new, :index, :show, :create, :edit, :update] do
-    resources :group_users, only: [:show, :create, :destroy]
-    resources :board_comments, only: [:create, :destroy]
-    resources :group_posts, only: [:new, :create, :index, :show,:destroy]
-  end
-
   namespace :admin do
     resources :dashboards, only: [:index, :show]
     resources :users, only: [:show, :destroy]
     resources :post_images, only: [:show, :destroy] do
-    resources :post_comments, only: [:destroy]
+      resources :post_comments, only: [:destroy]
     end
   end
-
-    
+  
+  resources :groups do
+    resources :permits, only: [:show, :create, :destroy, :index]
+    resources :board_comments, only: [:create, :destroy]
+    resources :group_users, only: [:create, :destroy] do
+      delete 'destroy_user', on: :member
+    end
+    resources :group_posts, only: [:new, :create, :index, :show, :destroy]
+  end
 end
