@@ -52,6 +52,9 @@ Rails.application.routes.draw do
     resources :permits, only: [:show, :create, :destroy, :index]
     resources :board_comments, only: [:create, :destroy]
     resources :group_users, only: [:create, :destroy] do
+      member do
+        patch 'reject'
+      end
       delete 'destroy_user', on: :member
     end
     resources :group_posts, only: [:new, :create, :index, :show, :destroy]

@@ -34,6 +34,18 @@ class GroupUsersController < ApplicationController
     end
   end
 
+  def reject
+    @group = Group.find(params[:group_id])
+    @group_user = @group.group_users.find_by(id: params[:id])
+  
+    if @group_user
+      @group_user.update(rejected: true)
+      redirect_to group_permits_path(@group), notice: '参加申請を拒否しました。'
+    else
+      redirect_to group_permits_path(@group), alert: '該当するユーザーが見つかりませんでした。'
+    end
+  end
+
   private
   
   def group_params
