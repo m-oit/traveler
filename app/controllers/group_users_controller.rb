@@ -10,7 +10,7 @@ class GroupUsersController < ApplicationController
   def create
     @group = Group.find(params[:group_id])
     @permit = Permit.find(params[:permit_id])
-    @group_user = GroupUser.create(user_id: @permit.user_id, group_id: params[:group_id])
+    @group_user = GroupUser.create(user_id: current_user.id, group_id: params[:group_id])
     @permit.destroy 
     redirect_to request.referer
   end
@@ -36,10 +36,10 @@ class GroupUsersController < ApplicationController
 
   def reject
     @group = Group.find(params[:group_id])
-    @group_user = @group.group_users.find_by(id: params[:id])
-  
-    if @group_user
-      @group_user.update(rejected: true)
+    @permit = Permit.find(params[:id])
+    
+    if @permit
+      @permit.destroy 
       redirect_to group_permits_path(@group), notice: '参加申請を拒否しました。'
     else
       redirect_to group_permits_path(@group), alert: '該当するユーザーが見つかりませんでした。'

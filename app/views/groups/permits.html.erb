@@ -1,7 +1,9 @@
 <div class="container">
   <h2 class="text-center"><%= @group.name %></h2>
   <h4 class="text-center">承認待ち一覧</h4>
-
+  <% flash.each do |message_type, message| %>
+    <div class="alert alert-<%= message_type %>"><%= message %></div>
+    <% end %>
   <div class="row mt-5">
     <div class="col-11 col-md-12 mx-auto">
       <% if @permits.present? %>
