@@ -58,8 +58,9 @@ Rails.application.routes.draw do
     get 'top', to: 'top#index'
   
     resources :post_images, only: [:show, :destroy] do
-      resources :post_comments, only: [:destroy]
+      resources :post_comments, only: [:index, :destroy]
     end
+    resources :post_comments, only: [:index, :destroy]
   end
   
   resources :groups do

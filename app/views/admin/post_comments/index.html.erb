@@ -1,0 +1,22 @@
+<h1>コメント一覧</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ユーザー名</th>
+      <th>コメント</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @post_comments.each do |comment| %>
+      <tr>
+        <td><%= comment.user.name %></td>
+        <td><%= comment.comment %></td>
+        <td>
+          <%= link_to '削除', admin_post_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

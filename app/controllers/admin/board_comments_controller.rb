@@ -4,11 +4,12 @@ class Admin::BoardCommentsController < ApplicationController
 
   def index
     if params[:search].present?
-      @board_comments = BoardComment.includes(:user, :group).where('body LIKE ?', "%#{params[:search]}%")
+      @board_comments = BoardComment.joins(:user).where('board_comments.body LIKE ? OR users.name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
     else
       @board_comments = BoardComment.includes(:user, :group).all
     end
   end
+
 
   def destroy
     @board_comment = BoardComment.find(params[:id])
