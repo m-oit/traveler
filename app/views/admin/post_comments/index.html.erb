@@ -1,3 +1,15 @@
+<%= form_with url: admin_post_comments_path, method: :get, local: true, class: 'form-inline' do |f| %>
+  <div class="form-group">
+    <%= f.label :search, '検索: ' %>
+    <%= f.text_field :search, class: 'form-control', placeholder: 'ユーザー名またはコメント', value: params[:search] %>
+  </div>
+  <%= f.submit '検索', class: 'btn btn-primary' %>
+  <% if params[:search].present? %>
+    <%= link_to 'リセット', admin_post_comments_path, class: 'btn btn-secondary ml-2' %>
+  <% end %>
+<% end %>
+
+
 <h1>コメント一覧</h1>
 
 <table class="table">

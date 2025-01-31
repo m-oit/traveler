@@ -3,9 +3,14 @@ class Admin::PostCommentsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @post_comments = PostComment.includes(:user).all
+    if params[:search].present?
+      @post_comments = PostComment.joins(:user)
+                                  .where('users.name LIKE ? OR post_comments.comment LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+    else
+      @post_comments = PostComment.includes(:user).all
+    end
   end
-
+  
   def destroy
     @post_comment = PostComment.find(params[:id])
     @post_comment.destroy
