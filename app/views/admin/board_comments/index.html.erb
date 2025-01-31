@@ -1,0 +1,24 @@
+<h1>コメント一覧</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ユーザー名</th>
+      <th>グループ名</th>
+      <th>コメント内容</th>
+      <th>操作</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @board_comments.each do |board_comment| %>
+      <tr>
+        <td><%= board_comment.user.name %></td>
+        <td><%= board_comment.group.name %></td>
+        <td><%= board_comment.body %></td>
+        <td>
+          <%= link_to '削除', admin_board_comment_path(board_comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
