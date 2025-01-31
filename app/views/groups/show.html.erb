@@ -7,38 +7,33 @@
   <h1 style="margin: 0;"><%= @group.name %></h1>
 </div>
 
-
-
-
-
 <%= form_with model: [@group, @group_post], local: true do |f| %>
-  <div class="form-group">
+  <div class="form-group mb-3">
     <%= f.label :image, "画像を選択" %>
-    <%= f.file_field :image, required: true %>
+    <%= f.file_field :image, required: true, class: 'form-control' %>
   </div>
   <%= f.submit "投稿する", class: "btn btn-primary" %>
 <% end %>
 
-<h2>投稿された画像</h2>
+<h2 class="mt-4">投稿された画像</h2>
 
 <% if @group_posts.any? %>
   <div class="row">
     <% @group_posts.each do |group_post| %>
       <% if group_post.image.attached? %>
-        <div class="col-4 mb-4">
+        <div class="col-12 col-md-4 mb-4">
           <div class="card">
             <div class="card-body">
               <%= link_to group_group_post_path(@group, group_post) do %>
                 <%= image_tag group_post.image, class: "card-img-top group-post-image" %>
               <% end %>
-
-              <div class="d-flex align-items-center mt-2"> 
+              <div class="d-flex align-items-center mt-2">
                 <% if group_post.user.profile_image.attached? %>
                   <%= image_tag group_post.user.profile_image, alt: "#{group_post.user.name} Profile", class: "profile-thumbnail", style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
                 <% else %>
                   <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
                 <% end %>
-                <p class="card-title mb-0" style="font-size: 0.9rem;"><%= group_post.user.name %></p> 
+                <p class="card-title mb-0" style="font-size: 0.9rem;"><%= group_post.user.name %></p>
               </div>
             </div>
           </div>
@@ -50,15 +45,9 @@
   <p>投稿された画像はありません。</p>
 <% end %>
 
-
-
-
-
-
 <% if @group.users.include?(current_user) || @group.owner == current_user %>
   <div class="group-board mt-4">
     <h4 class="mb-3">グループ掲示板</h4>
-
     <div class="comments-container" style="max-height: 300px; overflow-y: auto; border: 2px solid #000; border-radius: 8px; padding: 20px; background-color: #f8f9fa; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
       <% @group.board_comments.order(created_at: :asc).each do |comment| %>
         <div class="comment mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 15px;">
@@ -79,10 +68,8 @@
         </div>
       <% end %>
     </div>
-    
 
-    <% if @group.users.include?(current_user) %> 
-   
+    <% if @group.users.include?(current_user) %>
       <div class="mt-4">
         <%= form_with model: [@group, BoardComment.new], local: true do |f| %>
           <div class="form-group mb-3">
@@ -96,7 +83,6 @@
 <% else %>
   <div class="group-board mt-4">
     <h2 class="mb-3">グループ掲示板</h2>
-
     <div class="comments-container" style="max-height: 300px; overflow-y: auto; border: 2px solid #000; border-radius: 8px; padding: 20px; background-color: #f8f9fa; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
       <% @group.board_comments.order(created_at: :asc).each do |comment| %>
         <div class="comment mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 15px;">
@@ -116,11 +102,6 @@
   <strong class="mt-4 mb-5">グループに参加するとコメントを投稿できます！</strong>
 <% end %>
 
-
-
-
-
-
 <p class="mt-5"><strong>オーナー:</strong>
   <%= link_to user_path(@group.owner) do %>
     <% if @group.owner.profile_image.attached? %>
@@ -132,12 +113,12 @@
   <% end %>
 </p>
 
-<div class="group-details">
+<div class="group-details mt-4">
   <p><strong>紹介文:</strong> <%= @group.introduction %></p>
 
   <p><strong>参加ユーザー一覧</strong>
   <% if @group.users.any? %>
-    <ul>
+    <ul class="list-unstyled">
       <% @group.users.each do |user| %>
         <li>
           <%= link_to user_path(user) do %>
@@ -146,30 +127,3 @@
             <% else %>
               <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;' %>
             <% end %>
-            <%= user.name %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>メンバーはいません。</p>
-  <% end %>
-</div>
-
-<% if @group.group_users.exists?(user_id: current_user.id) %>
-  <%= link_to 'グループから退出', group_group_user_path(@group, current_user), method: :delete, data: { confirm: '本当にグループから退出しますか？' } %>
-<% elsif @group.permits.exists?(user_id: current_user.id) %>
-  <%= link_to '申請取消', group_permits_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
-<% elsif @group.owner != current_user %>
-  <%= link_to '加入申請', group_permits_path(@group), method: :post, class: "btn btn-sm btn-success" %>
-<% end %>
-
-
-<div class="group-actions">
-  <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>
-  <% if @group.is_owned_by?(current_user) %>
-  <%= link_to "承認待ち一覧", group_permits_path(@group), class: "dropdown-item text-secondary bg-transparent" %>
-    <%= link_to 'グループを編集', edit_group_path(@group), class: 'btn btn-warning' %>
-    <%= link_to 'グループ削除', group_path(@group), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "本当に削除しますか？" } %>
-    <% end %>
-</div>

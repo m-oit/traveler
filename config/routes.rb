@@ -1,5 +1,12 @@
 Rails.application.routes.draw do
  
+  namespace :admin do
+    get 'groups/index'
+    get 'groups/destroy'
+  end
+  namespace :admin do
+    get 'top/index'
+  end
   get 'group_posts/new'
   get 'group_posts/create'
   get 'group_posts/index'
@@ -41,8 +48,16 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    root to: "dashboards#index"
     resources :dashboards, only: [:index, :show]
     resources :users, only: [:show, :destroy]
+    
+    resources :groups, only: [:index, :destroy, :show] do
+      resources :board_comments, only: [:destroy]
+    end
+    
+    get 'top', to: 'top#index'
+  
     resources :post_images, only: [:show, :destroy] do
       resources :post_comments, only: [:destroy]
     end
