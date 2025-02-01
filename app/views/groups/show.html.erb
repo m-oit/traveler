@@ -169,6 +169,7 @@
   <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>
   <% if @group.is_owned_by?(current_user) %>
   <%= link_to "承認待ち一覧", group_permits_path(@group), class: "dropdown-item text-secondary bg-transparent" %>
+  <%= link_to '新しいイベント通知を作成', new_group_event_notice_path(@group), class: 'btn btn-primary' %>
     <%= link_to 'グループを編集', edit_group_path(@group), class: 'btn btn-warning' %>
     <%= link_to 'グループ削除', group_path(@group), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "本当に削除しますか？" } %>
     <% end %>

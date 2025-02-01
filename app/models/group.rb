@@ -7,6 +7,7 @@ class Group < ApplicationRecord
     has_many :group_posts
     has_many :permits, dependent: :destroy
     has_many :users, through: :group_users, source: :user
+    has_many :event_notices
     
   
     validates :name, presence: true
