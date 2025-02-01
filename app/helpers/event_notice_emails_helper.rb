@@ -1,0 +1,2 @@
+module EventNoticeEmailsHelper
+end

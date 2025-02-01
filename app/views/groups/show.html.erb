@@ -164,6 +164,7 @@
   <%= link_to '加入申請', group_permits_path(@group), method: :post, class: "btn btn-sm btn-success" %>
 <% end %>
 
+  <h3><%= link_to '通知一覧', group_event_notice_emails_path(@group) %></h3>
 
 <div class="group-actions">
   <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>

@@ -15,6 +15,7 @@ class User < ApplicationRecord
   has_many :groups, through: :group_users
   has_many :permits, dependent: :destroy
   has_many :board_comments
+  has_many :event_notice_emails
   
   def get_profile_image(width, height)
     unless profile_image.attached?

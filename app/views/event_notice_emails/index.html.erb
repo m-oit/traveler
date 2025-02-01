@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6">
+      <h1>送信されたメールの一覧</h1>
+
+      <% if @event_notice_emails.present? %>
+        <% @event_notice_emails.each do |email| %>
+          <div class="email-item">
+            <h3><%= link_to email.title, group_event_notice_email_path(@group, email) %></h3>
+            <p><%= email.body.truncate(100) %></p>
+          </div>
+        <% end %>
+      <% else %>
+        <p>まだ通知はありません。</p>
+      <% end %>
+
+    <div class="mt-3">
+        <%= link_to 'グループの詳細に戻る', group_path(@group), class: 'btn btn-secondary' %>
+      </div>
+
+    </div>
+  </div>
+</div>
