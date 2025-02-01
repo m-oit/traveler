@@ -3,7 +3,6 @@ class Admin::PostCommentsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @group = Group.find_by(id: params[:group_id])
     
     if params[:search].present?
       @post_comments = PostComment.joins(:user)

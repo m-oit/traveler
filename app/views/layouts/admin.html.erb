@@ -30,11 +30,10 @@
     <div class="text-right">
       <%= link_to 'コメント一覧', admin_post_comments_path %>
     </div>
-
-      <div class="text-right">
-        <%= link_to 'グループコメント一覧', admin_group_board_comments_path(group_id: @group.id) if @group %>
-      </div>
-
+ 
+    <div class="text-right">
+      <%= link_to 'グループコメント管理', admin_board_comments_path, class: 'text-dark' %>
+    </div>
 
       <div class="text-right">
         <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: 'text-dark' %>
