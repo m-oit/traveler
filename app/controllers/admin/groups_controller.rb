@@ -4,6 +4,7 @@ class Admin::GroupsController < ApplicationController
 
   def index
     @groups = Group.includes(:owner)
+    @group = Group.find_by(id: params[:group_id]) if params[:group_id].present?
   end
 
   def show
@@ -16,5 +17,4 @@ class Admin::GroupsController < ApplicationController
     @group.destroy
     redirect_to admin_groups_path, notice: "グループを削除しました。"
   end
-
 end

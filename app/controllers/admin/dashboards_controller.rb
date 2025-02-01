@@ -4,6 +4,7 @@ class Admin::DashboardsController < ApplicationController
     
 def index
     @users = User.all
+    @group = Group.first
 end
 
 end

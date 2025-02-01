@@ -1,0 +1,34 @@
+<h1>通知一覧</h1>
+
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>タイトル</th>
+      <th>内容</th>
+      <th>削除</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event_notice_emails.each do |event_notice_email| %>
+      <tr>
+        <td><%= event_notice_email.title %></td>
+        <td><%= event_notice_email.body %></td>
+        <td>
+          <%= link_to '削除', admin_event_notice_email_path(event_notice_email), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

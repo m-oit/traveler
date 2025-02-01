@@ -1,15 +1,16 @@
-<%= form_with(url: admin_board_comments_path, method: :get, class: 'form-inline') do %>
+<%= form_with(url: admin_group_board_comments_path(@group), method: :get, class: 'form-inline') do %>
   <div class="form-group">
     <%= label_tag :search, '検索:', class: 'mr-2' %>
     <%= text_field_tag :search, params[:search], class: 'form-control mr-2', placeholder: 'ユーザー名またはコメント' %>
     <%= submit_tag '検索', class: 'btn btn-primary' %>
   </div>
+
   <% if params[:search].present? %>
-    <%= link_to 'リセット', admin_board_comments_path, class: 'btn btn-secondary ml-2' %>
+    <%= link_to 'リセット', admin_group_board_comments_path(@group), class: 'btn btn-secondary ml-2' %>
   <% end %>
 <% end %>
 
-
+<h2>グループコメント管理</h2>
 <table class="table">
   <thead>
     <tr>
@@ -24,7 +25,7 @@
         <td><%= comment.user.name %></td>
         <td><%= comment.body %></td>
         <td>
-          <%= link_to '削除', admin_board_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+          <%= link_to '削除', admin_group_board_comment_path(@group, comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
         </td>
       </tr>
     <% end %>

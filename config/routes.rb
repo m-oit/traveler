@@ -52,8 +52,9 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index, :show]
     resources :users, only: [:show, :destroy]
     
-    resources :groups, only: [:index, :destroy, :show]
+    resources :groups, only: [:index, :destroy, :show] do
       resources :board_comments, only: [:index, :destroy]
+    end
     
     get 'top', to: 'top#index'
   
