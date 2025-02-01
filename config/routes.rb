@@ -66,6 +66,7 @@ Rails.application.routes.draw do
   resources :groups do
     resources :permits, only: [:show, :create, :destroy, :index]
     resources :board_comments, only: [:create, :destroy]
+    resources :event_notices, only: [:new, :create]
     resources :group_users, only: [:create, :destroy] do
       member do
         patch 'reject'
