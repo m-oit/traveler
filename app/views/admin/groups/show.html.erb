@@ -42,33 +42,4 @@
 <% end %>
 
 
-<% if @group.owner == current_user %>
-  <div class="group-actions">
-    <%= link_to 'グループを編集', edit_admin_group_path(@group), class: 'btn btn-warning' %>
-    <%= link_to 'グループ削除', admin_group_path(@group), method: :delete, class: "btn btn-danger", data: { confirm: "本当に削除しますか？" } %>
-  </div>
-<% end %>
-
-<h3>グループ掲示板</h3>
-<% @group.board_comments.each do |comment| %>
-  <div class="comment mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 15px;">
-    <div class="d-flex align-items-center mb-2">
-      <% if comment.user.profile_image.attached? %>
-        <%= image_tag comment.user.profile_image, class: "rounded-circle me-2", alt: "#{comment.user.name} Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
-      <% else %>
-        <%= image_tag 'no_image.jpg', class: "rounded-circle me-2", alt: "No Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
-      <% end %>
-      <strong><%= comment.user.name %></strong>
-    </div>
-    <p class="mb-2"><%= comment.body %></p>
-    
-    <% if current_user && (comment.user == current_user || @group.owner == current_user || current_user.admin?) %>
-    <div class="text-end">
-      <%= link_to '削除', admin_group_board_comment_path(@group, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger btn-sm' %>
-    </div>
-  <% end %>
-  </div>
-<% end %>
-
-
 <%= link_to 'グループ一覧に戻る', admin_groups_path, class: 'btn btn-secondary' %>

@@ -12,9 +12,6 @@
   <h4><%= @user.name %></h4> 
   <%= image_tag @user.get_profile_image(100, 100) %>
 
-  <% if @user == current_user %>
-    <p><%= link_to "Edit Profile", edit_user_path(@user) %></p>
-  <% end %>
 </div>
 
 <%= render 'admin/post_images/list', post_images: @post_images %>
