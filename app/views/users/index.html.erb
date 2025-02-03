@@ -4,7 +4,7 @@
     <% @users.each do |user| %>
       <tr>
         <td>
-          <%= image_tag user.get_profile_image(50, 50), size: '50x50', class: 'mr-2' %> <!-- アイコンを名前の左横に表示 -->
+          <%= image_tag user.get_profile_image(50, 50), size: '50x50', class: 'mr-2' %>
           <%= user.name %>
         </td>
         <td>

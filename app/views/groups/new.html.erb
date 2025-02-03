@@ -1,35 +1,39 @@
-<h1 class="mb-4">新しいグループを作成</h1>
+<h1 class="mb-4 text-center">新しいグループを作成</h1>
 
-<%= form_with model: @group, local: true, html: { class: 'form-group' } do |form| %>
-  <% if @group.errors.any? %>
-    <div id="error_explanation" class="alert alert-danger">
-      <h4><%= pluralize(@group.errors.count, "error") %>が発生しました:</h4>
-      <ul>
-        <% @group.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<div class="container">
+  <%= form_with model: @group, local: true, html: { class: 'form-group' } do |form| %>
+    <% if @group.errors.any? %>
+      <div id="error_explanation" class="alert alert-danger mb-4">
+        <h4><%= pluralize(@group.errors.count, "error") %>が発生しました:</h4>
+        <ul>
+          <% @group.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="mb-3">
+      <%= form.label :name, 'グループ名', class: 'form-label' %>
+      <%= form.text_field :name, id: :group_name, class: 'form-control', placeholder: "グループ名を入力してください" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :introduction, '紹介文', class: 'form-label' %>
+      <%= form.text_area :introduction, id: :group_introduction, class: 'form-control', placeholder: "グループの紹介文を入力してください", rows: 4 %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :post_image, 'グループ画像', class: 'form-label' %>
+      <%= form.file_field :post_image, class: 'form-control-file' %>
+    </div>
+
+    <div class="mb-3 text-center">
+      <%= form.submit 'グループを作成', class: 'btn btn-primary' %>
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= form.label :name, 'グループ名', class: 'form-label' %>
-    <%= form.text_field :name, id: :group_name, class: 'form-control', placeholder: "グループ名を入力してください" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :introduction, '紹介文', class: 'form-label' %>
-    <%= form.text_area :introduction, id: :group_introduction, class: 'form-control', placeholder: "グループの紹介文を入力してください", rows: 4 %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :post_image, 'グループ画像', class: 'form-label' %> <!-- image → post_image に変更 -->
-    <%= form.file_field :post_image, class: 'form-control-file' %>  <!-- image → post_image に変更 -->
-  </div>
-
-  <div class="form-group">
-    <%= form.submit 'グループを作成', class: 'btn btn-primary btn-sm' %>
-  </div>
-<% end %>
-
-<%= link_to 'キャンセル', groups_path, class: 'btn btn-secondary btn-sm' %>
+<div class="text-center mt-3">
+  <%= link_to 'キャンセル', request.referer || groups_path, class: 'btn btn-secondary' %>
+</div>
+</div>

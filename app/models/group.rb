@@ -10,6 +10,7 @@ class Group < ApplicationRecord
     has_many :event_notices
     has_many :event_notice_emails
     
+    
   
     validates :name, presence: true
     validates :introduction, presence: true
