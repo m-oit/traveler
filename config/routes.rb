@@ -80,6 +80,8 @@ Rails.application.routes.draw do
       end
       delete 'destroy_user', on: :member
     end
-    resources :group_posts, only: [:new, :create, :index, :show, :destroy]
+    resources :group_posts, only: [:new, :create, :index, :show, :destroy] do
+      resources :group_post_comments, only: [:create, :destroy]
+    end
   end
 end

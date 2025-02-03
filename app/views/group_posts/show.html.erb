@@ -1,13 +1,52 @@
-<h1><%= @group_post.user.name %>の投稿</h1>
+<% if @group_post.present? %>
+  <h1><%= @group_post.user.name %>の投稿</h1>
 
-<% if @group_post.image.attached? %>
-  <%= image_tag @group_post.image, class: 'img-fluid', style: 'max-width: 80%; height: auto;' %>
+  <% if @group_post.image.attached? %>
+    <%= image_tag @group_post.image, class: 'img-fluid', style: 'max-width: 80%; height: auto;' %>
+  <% else %>
+    <p>画像はありません</p>
+  <% end %>
+
+  <p><strong>投稿日時:</strong> <%= @group_post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
+
+  <div class="mt-4 px-4">
+  <p><strong>コメント件数:</strong> <%= @group_post.group_post_comments.count %></p>
+  <% @group_post.group_post_comments.each do |group_post_comment| %>
+    <div class="d-flex align-items-center mb-3">
+      <%= image_tag group_post_comment.user.get_profile_image(40,40), class: "rounded-circle me-2" %>
+      <p class="mb-0 me-2">
+        <strong><%= group_post_comment.user.name %></strong>
+        <span class="ms-2">/</span>
+        <span class="ms-2"><%= group_post_comment.created_at.strftime('%Y/%m/%d') %></span>
+      </p>
+    </div>
+    <div class="mb-2">
+      <p><%= group_post_comment.comment %></p>
+    </div>
+    <% if group_post_comment.user == current_user %>
+      <div class="mb-3">
+        <%= link_to "コメントを編集", edit_group_post_group_post_comment_path(group_post_comment.group_post, group_post_comment), class: "btn btn-sm btn-outline-primary" %>
+        <%= link_to "コメントを削除", group_post_group_post_comment_path(group_post_comment.group_post, group_post_comment), method: :delete, class: "btn btn-sm btn-outline-danger" %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+
+<div class="mt-4 px-4">
+  <%= form_with model: [@group_post, @group_post_comment], class: "form-group" do |f| %>
+    <%= f.text_area :comment, rows: '5', class: "form-control", placeholder: "コメントを入力してください！" %>
+    <div class="form-group mt-3 text-end">
+      <%= f.submit "送信する", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+
+
+  <% if current_user == @group_post.user || current_user == @group.owner %>
+    <%= link_to '削除', group_group_post_path(@group, @group_post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+  <% end %>
+
+
 <% else %>
-  <p>画像はありません</p>
-<% end %>
-
-<p><strong>投稿日時:</strong> <%= @group_post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
-
-<% if current_user == @group_post.user || current_user == @group.owner %>
-  <%= link_to '削除', group_group_post_path(@group, @group_post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+  <p>投稿が見つかりませんでした。</p>
 <% end %>

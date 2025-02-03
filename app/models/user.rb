@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
   has_many :post_images, dependent: :destroy
   has_many :post_comments, dependent: :destroy
+  has_many :group_post_comments, dependent: :destroy
   has_one_attached :profile_image
   has_many :favorites, dependent: :destroy
   has_many :liked_posts, through: :favorites, source: :post_image
@@ -16,8 +17,9 @@ class User < ApplicationRecord
   has_many :permits, dependent: :destroy
   has_many :board_comments
   has_many :event_notice_emails
+  has_many :owned_groups, class_name: 'Group', foreign_key: 'owner_id'
   
-  
+
   def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/profile.jpeg')

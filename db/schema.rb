@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2025_02_01_052503) do
+ActiveRecord::Schema.define(version: 2025_02_03_144018) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -89,6 +89,17 @@ ActiveRecord::Schema.define(version: 2025_02_01_052503) do
     t.integer "post_image_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "group_post_comments", force: :cascade do |t|
+    t.integer "group_post_id", null: false
+    t.integer "user_id", null: false
+    t.text "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.text "body"
+    t.index ["group_post_id"], name: "index_group_post_comments_on_group_post_id"
+    t.index ["user_id"], name: "index_group_post_comments_on_user_id"
   end
 
   create_table "group_posts", force: :cascade do |t|
@@ -172,6 +183,8 @@ ActiveRecord::Schema.define(version: 2025_02_01_052503) do
   add_foreign_key "event_notice_emails", "groups"
   add_foreign_key "event_notice_emails", "users"
   add_foreign_key "event_notices", "groups"
+  add_foreign_key "group_post_comments", "group_posts"
+  add_foreign_key "group_post_comments", "users"
   add_foreign_key "group_posts", "groups"
   add_foreign_key "group_posts", "users"
   add_foreign_key "permits", "groups"

@@ -9,11 +9,13 @@ class Group < ApplicationRecord
     has_many :users, through: :group_users, source: :user
     has_many :event_notices
     has_many :event_notice_emails
-    
+    belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
+    has_many :group_post_comments, dependent: :destroy
     
   
     validates :name, presence: true
     validates :introduction, presence: true
+    validates :owner_id, presence: true
   
     def get_image
       (post_image.attached?) ? post_image : 'no_image.jpg'
