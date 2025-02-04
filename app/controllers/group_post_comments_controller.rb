@@ -3,14 +3,14 @@ class GroupPostCommentsController < ApplicationController
   before_action :correct_user, only: [:edit, :update, :destroy]
 
   def create
-
-    Rails.logger.debug(params.inspect)
-
     group_post = GroupPost.find(params[:group_post_id])
     comment = current_user.group_post_comments.new(group_post_comment_params)
     comment.group_post_id = group_post.id 
-    comment.save 
-    redirect_to group_post_path(group_post) 
+    if comment.save
+    redirect_to group_group_post_path(group_post.group, group_post)
+  else
+    redirect_to group_group_post_path(group_post.group, group_post)
+  end
   end
 
   def show
@@ -50,6 +50,10 @@ class GroupPostCommentsController < ApplicationController
     if @group_post_comment.user != current_user 
       redirect_to group_post_path(@group_post_comment.group_post), alert: "あなたはこのコメントを編集できません。"
     end
+  end
+
+  def group_post_comment_params
+    params.require(:group_post_comment).permit(:comment)
   end
 
   def group_post_comment_params

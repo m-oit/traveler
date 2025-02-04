@@ -1,35 +1,39 @@
 <h1 class="mb-4 text-center"><%= @user.name %> のグループ一覧</h1>
 
-<% if @owned_groups.present? %>
-  <h3>オーナーのグループ</h3>
-  <ul>
-    <% @owned_groups.each do |group| %>
-      <li>
-        <%= link_to group.name, group_path(group) %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p>オーナーのグループはありません。</p>
-<% end %>
-
-
-<h3>所属しているグループ</h3>
-<% if @groups.present? %>
-  <ul class="list-unstyled">
-    <% @groups.each do |group| %>
-      <li class="mb-3">
-        <%= link_to group_path(group), class: 'text-decoration-none text-dark d-flex align-items-center' do %>
+<div class="container">
+  <% if @owned_groups.present? %>
+    <h3 class="mb-3">オーナーのグループ</h3>
+    <ul class="list-unstyled">
+      <% @owned_groups.each do |group| %>
+        <li class="mb-3 d-flex align-items-center">
           <% if group.post_image.attached? %> 
-            <%= image_tag group.post_image, alt: 'Group Image', class: 'group-image-thumbnail', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
+            <%= image_tag group.post_image, alt: 'Group Image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
           <% else %>
-            <%= image_tag 'no_image.jpg', alt: 'No image', class: 'group-image-thumbnail', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
+            <%= image_tag 'no_image.jpg', alt: 'No image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
           <% end %>
-          <h5 class="mb-0"><%= group.name %></h5>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% else %>
-  <p class="text-center">所属しているグループはありません。</p>
-<% end %>
+          <h5 class="mb-0 ms-3 text-dark"><%= link_to group.name, group_path(group), class: 'text-decoration-none text-dark' %></h5>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-center">オーナーのグループはありません。</p>
+  <% end %>
+
+  <h3 class="mt-4 mb-3">所属しているグループ</h3>
+  <% if @groups.present? %>
+    <ul class="list-unstyled">
+      <% @groups.each do |group| %>
+        <li class="mb-3 d-flex align-items-center">
+          <% if group.post_image.attached? %> 
+            <%= image_tag group.post_image, alt: 'Group Image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
+          <% else %>
+            <%= image_tag 'no_image.jpg', alt: 'No image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
+          <% end %>
+          <h5 class="mb-0 ms-3 text-dark"><%= link_to group.name, group_path(group), class: 'text-decoration-none text-dark' %></h5>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-center">所属しているグループはありません。</p>
+  <% end %>
+</div>

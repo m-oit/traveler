@@ -59,4 +59,5 @@ class GroupPostsController < ApplicationController
   def group_post_params
     params.require(:group_post).permit(:image)
   end
+
 end
