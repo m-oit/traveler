@@ -56,7 +56,7 @@ Rails.application.routes.draw do
     resources :board_comments, only: [:index, :destroy]
     
     get 'top', to: 'top#index'
-  
+
     resources :post_images, only: [:show, :destroy] do
       resources :post_comments, only: [:index, :destroy]
     end
@@ -82,6 +82,7 @@ Rails.application.routes.draw do
     end
     resources :group_posts, only: [:new, :create, :index, :show, :destroy] do
       resources :group_post_comments, only: [:create, :destroy]
+      resource :group_favorites, only: [:create, :destroy]
     end
   end
 end

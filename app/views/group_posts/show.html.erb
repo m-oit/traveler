@@ -11,6 +11,27 @@
 
   <p class="text-center mt-3"><strong>投稿日時:</strong> <%= @group_post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
 
+  
+
+
+ <% if @group_post.favorited_by?(current_user) %>
+    <p>
+    <%= link_to group_group_post_group_favorites_path(@group_post.group, @group_post), method: :delete do %>
+        ♥<%= @group_post.group_favorites.count %> いいね
+      <% end %>
+    </p>
+    <% else %>
+    <p>
+      <%= link_to group_group_post_group_favorites_path(@group_post.group, @group_post), method: :post do %>
+        ♡<%= @group_post.group_favorites.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
+
+
+
+
+
   <div class="mt-4 px-4">
     <p><strong>コメント件数:</strong> <%= @group_post.group_post_comments.count %></p>
     <% @group_post.group_post_comments.each do |group_post_comment| %>
@@ -47,8 +68,9 @@
     <div class="text-center mt-3">
       <%= link_to '削除', group_group_post_path(@group, @group_post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
     </div>
-  <% end %>
+
 
 <% else %>
   <p class="text-center">投稿が見つかりませんでした。</p>
+<% end %>
 <% end %>

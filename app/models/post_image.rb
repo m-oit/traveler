@@ -6,6 +6,7 @@ class PostImage < ApplicationRecord
  has_many :favorites, dependent: :destroy
  has_many :liked_by_users, through: :favorites, source: :user
  belongs_to :group
+ has_many :group_favorites, dependent: :destroy
 
 
  validates :title, presence: true
