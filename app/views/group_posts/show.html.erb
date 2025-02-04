@@ -32,9 +32,11 @@
   <% end %>
 </div>
 
-
+1<%= @group_post %>
+2<%= @group_post_comment %>
+3<%= @group.id %>
 <div class="mt-4 px-4">
-  <%= form_with model: [@group_post, @group_post_comment], class: "form-group" do |f| %>
+  <%= form_with model: [@group_post, @group_post_comment], url: group_group_post_group_post_comments_path(@group.id,@group_post.id),class: "form-group" do |f| %>
     <%= f.text_area :comment, rows: '5', class: "form-control", placeholder: "コメントを入力してください！" %>
     <div class="form-group mt-3 text-end">
       <%= f.submit "送信する", class: "btn btn-primary" %>

@@ -8,9 +8,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @post_images = @user.post_images.page(params[:page])
     @groups = @user.groups
-
-    @owned_groups = @user.owned_groups
-
   end
 
   def index
@@ -39,6 +36,7 @@ end
 
   def groups
     @groups = @user.groups
+    @owned_groups = @user.owned_groups
   end
 
   def destroy

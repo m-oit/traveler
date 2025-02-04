@@ -23,7 +23,7 @@ class GroupPostsController < ApplicationController
   def show
     @group = Group.find(params[:group_id])
     @group_post = GroupPost.find(params[:id])
-    @post_comment = GroupPostComment.new
+    @group_post_comment = GroupPostComment.new
     @group_post = @group.group_posts.find_by(id: params[:id])
     if @group_post.nil?
       redirect_to group_group_posts_path(@group), alert: '投稿が見つかりません。'
