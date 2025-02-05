@@ -158,7 +158,6 @@ ActiveRecord::Schema.define(version: 2025_02_04_141440) do
     t.string "title"
     t.text "caption"
     t.integer "user_id"
-    t.integer "group_id"
   end
 
   create_table "relationships", force: :cascade do |t|
