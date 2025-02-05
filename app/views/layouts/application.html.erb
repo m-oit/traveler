@@ -39,6 +39,9 @@
               <i class="fa-solid fa-users"></i><%= link_to 'User List', users_path, style: "color: black;" %>
             </li>
             <li class="nav-item mb-3 mr-3">
+            <i class="fa-solid fa-people-roof"></i><%= link_to 'My Group', groups_user_path(current_user), style: "color: black;" %>
+            </li>
+            <li class="nav-item mb-3 mr-3">
             <i class="fa-regular fa-heart"></i><%= link_to 'Likes', likes_user_path(current_user), style: "color: black;" %>
             </li>
             <li class="nav-item mb-3 mr-3">

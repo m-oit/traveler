@@ -22,6 +22,7 @@ class GroupsController < ApplicationController
     @group_posts.each do |group_post|
       group_post.user ||= User.new
     end
+    @is_owner_or_member = @group.is_owned_by?(current_user) || @group.includesUser?(current_user)
   end
   
   def create

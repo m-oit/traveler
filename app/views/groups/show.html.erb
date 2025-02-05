@@ -79,10 +79,9 @@
         </div>
       <% end %>
     </div>
-    
 
-    <% if @group.users.include?(current_user) %> 
-   
+    <% if @group.users.include?(current_user) || @group.owner == current_user %> 
+      <!-- グループのオーナーまたはメンバーのみコメント投稿できるフォーム -->
       <div class="mt-4">
         <%= form_with model: [@group, BoardComment.new], local: true do |f| %>
           <div class="form-group mb-3">
@@ -92,29 +91,13 @@
         <% end %>
       </div>
     <% end %>
-  </div>
-<% else %>
-  <div class="group-board mt-4">
-    <h2 class="mb-3">グループ掲示板</h2>
 
-    <div class="comments-container" style="max-height: 300px; overflow-y: auto; border: 2px solid #000; border-radius: 8px; padding: 20px; background-color: #f8f9fa; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
-      <% @group.board_comments.order(created_at: :asc).each do |comment| %>
-        <div class="comment mb-3" style="border-bottom: 1px solid #ddd; padding-bottom: 15px;">
-          <div class="d-flex align-items-center mb-2">
-            <% if comment.user.profile_image.attached? %>
-              <%= image_tag comment.user.profile_image, class: "rounded-circle me-2", alt: "#{comment.user.name} Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
-            <% else %>
-              <%= image_tag 'no_image.jpg', class: "rounded-circle me-2", alt: "No Profile", style: "width: 40px; height: 40px; object-fit: cover;" %>
-            <% end %>
-            <strong><%= comment.user.name %></strong>
-          </div>
-          <p class="mb-2"><%= comment.body %></p>
-        </div>
-      <% end %>
-    </div>
+    <% if !@group.users.include?(current_user) && @group.owner != current_user %>
+      <strong class="mt-4 mb-5">グループに参加するとコメントを投稿できます！</strong>
+    <% end %>
   </div>
-  <strong class="mt-4 mb-5">グループに参加するとコメントを投稿できます！</strong>
 <% end %>
+
 
 
 
@@ -164,7 +147,9 @@
   <%= link_to '加入申請', group_permits_path(@group), method: :post, class: "btn btn-sm btn-success" %>
 <% end %>
 
+
   <h3><%= link_to '通知一覧', group_event_notice_emails_path(@group) %></h3>
+
 
 <div class="group-actions">
   <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>
