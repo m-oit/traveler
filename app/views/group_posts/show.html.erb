@@ -44,20 +44,17 @@
         </p>
       </div>
       <div class="mb-2 ps-4">
-        <p><%= group_post_comment.comment %></p>
+        <p><%= group_post_comment.content %></p>
       </div>
       <% if group_post_comment.user == current_user %>
-        <div class="mb-3 ps-4">
-          <%= link_to "コメントを編集", edit_group_post_group_post_comment_path(group_post_comment.group_post, group_post_comment), class: "btn btn-sm btn-outline-primary" %>
-          <%= link_to "コメントを削除", group_post_group_post_comment_path(group_post_comment.group_post, group_post_comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
-        </div>
+
       <% end %>
     <% end %>
   </div>
 
   <div class="mt-4 px-4">
     <%= form_with model: [@group_post, @group_post_comment], url: group_group_post_group_post_comments_path(@group.id,@group_post.id), class: "form-group" do |f| %>
-      <%= f.text_area :comment, rows: '5', class: "form-control", placeholder: "コメントを入力してください！" %>
+      <%= f.text_area :content, rows: '5', class: "form-control", placeholder: "コメントを入力してください！" %>
       <div class="form-group mt-3 text-end">
         <%= f.submit "送信する", class: "btn btn-primary" %>
       </div>
