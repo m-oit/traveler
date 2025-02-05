@@ -56,6 +56,10 @@ class GroupsController < ApplicationController
     @permits = @group.permits.page(params[:page])
   end
 
+  def group_likes
+    @group = Group.find(params[:id])
+    @group_likes = @group.group_favorites
+  end
 
   private
 
