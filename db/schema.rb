@@ -105,8 +105,6 @@ ActiveRecord::Schema.define(version: 2025_02_04_141440) do
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.text "body"
-    t.text "comment"
     t.index ["group_post_id"], name: "index_group_post_comments_on_group_post_id"
     t.index ["user_id"], name: "index_group_post_comments_on_user_id"
   end
