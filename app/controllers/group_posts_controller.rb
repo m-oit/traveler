@@ -23,6 +23,7 @@ class GroupPostsController < ApplicationController
   def show
     @group = Group.find(params[:group_id])
     @group_post = GroupPost.find(params[:id])
+    @group_post_comments = @group_post.group_post_comments
     @group_post_comment = GroupPostComment.new
     @group_post = @group.group_posts.find_by(id: params[:id])
     if @group_post.nil?
@@ -49,6 +50,8 @@ class GroupPostsController < ApplicationController
       redirect_to group_path(@group), alert: '権限がありません。'
     end
   end
+
+
 
   private
 

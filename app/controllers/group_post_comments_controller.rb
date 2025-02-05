@@ -18,9 +18,12 @@ class GroupPostCommentsController < ApplicationController
     @group_post_comment = GroupPost.new
   end
 
+
   def destroy
-    GroupPostComment.find(params[:id]).destroy
-    redirect_to group_post_path(params[:group_post_id])
+    @group_post_comment = GroupPostComment.find(params[:id])
+    group_post = @group_post_comment.group_post
+    @group_post_comment.destroy
+    redirect_to group_group_post_path(group_post.group, group_post)
   end
 
   def edit
