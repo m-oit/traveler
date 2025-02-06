@@ -1,0 +1,2 @@
+module PostGroupLikesHelper
+end
