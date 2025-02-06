@@ -32,7 +32,7 @@ class GroupPostCommentsController < ApplicationController
 
   def update
     if @group_post_comment.update(group_post_comment_params) 
-      redirect_to group_post_path(@group_post_comment.group_post), notice: "コメントを更新しました。"
+      redirect_to group_group_post_path(@group_post_comment.group_post.group, @group_post_comment.group_post), notice: "コメントを更新しました。"
     else
       @group_post = @group_post_comment.group_post 
       flash.now[:alert] = "コメントの更新に失敗しました。" 
