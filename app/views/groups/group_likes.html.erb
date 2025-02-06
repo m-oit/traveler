@@ -1,0 +1,9 @@
+<h1><%= @group.name %> のいいね一覧</h1>
+<ul>
+  <% @group_likes.each do |like| %>
+    <li>
+      <%= image_tag(like.group_post.image) %>
+      <%= link_to 'グループページへ', group_path(@group) %>
+    </li>
+  <% end %>
+</ul>

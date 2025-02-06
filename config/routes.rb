@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   end
   
   resources :groups do
+    member do
+      get 'group_likes'
+    end
     resources :permits, only: [:show, :create, :destroy, :index]
     resources :board_comments, only: [:create, :destroy]
     resources :event_notices, only: [:new, :create] do
