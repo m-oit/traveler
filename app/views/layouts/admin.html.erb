@@ -1,48 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>Admin - Tlaveler</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Traveler</title>
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
+
+  <script src="https://kit.fontawesome.com/9c3f34c97f.js" crossorigin="anonymous"></script>
   <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
   <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 </head>
 
-<header class="bg-info">
-<nav class="navbar navbar-expand-lg navbar-light">
-  <div class="container">
-    <a class="navbar-brand p-3" href="/">Traveler</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
-        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-     <span class="navbar-toggler-icon"></span>
-   </button>
-   <div class="collapse navbar-collapse" id="navbarNavDropdown">
-   <ul class="navbar-nav ml-auto">
-  
-    <% if admin_signed_in? %>
-    <div class="text-right">
-        <%= link_to '全ユーザー一覧', admin_dashboards_path, class: 'text-dark' %>
-    </div>
-    <div class="text-right">
-        <%= link_to '全グループ一覧', admin_groups_path, class: 'text-dark' %>
-    </div>
+<body>
+  <header class="bg-info">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand p-3" href="/">Traveler</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" 
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <% if admin_signed_in? %>
 
-    <div class="text-right">
-      <%= link_to 'コメント一覧', admin_post_comments_path %>
-    </div>
- 
-    <div class="text-right">
-      <%= link_to 'グループ掲示板管理', admin_board_comments_path, class: 'text-dark' %>
-    </div>
-
-      <div class="text-right">
-        <%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, class: 'text-dark' %>
+              <li class="nav-item mr-3">
+              <i class="fa-solid fa-user"></i><%= link_to '全ユーザー一覧', admin_dashboards_path, style: "color: black;" %>
+              </li>
+              <li class="nav-item mr-3">
+              <i class="fa-solid fa-people-group"></i><%= link_to '全グループ一覧', admin_groups_path, style: "color: black;" %>
+              </li>
+              <li class="nav-item mr-3">
+              <i class="fa-solid fa-comment"></i><%= link_to 'コメント一覧', admin_post_comments_path, style: "color: black;" %>
+              </li>
+              <li class="nav-item mr-3">
+              <i class="fa-solid fa-comments"></i><%= link_to 'グループコメント管理', admin_board_comments_path, style: "color: black;" %>
+              </li>
+              <li class="nav-item mr-3">
+              <i class="fa-solid fa-jet-fighter"></i><%= link_to 'ログアウト', destroy_admin_session_path, method: :delete, style: "color: black;" %>
+              </li>
+              <% else %>
+              <li class="nav-item mr-3">
+              <i class="fa-solid fa-suitcase"></i><%= link_to 'トップページへ戻る', top_path, style: "color: black;" %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
       </div>
-    <% end %>
- 
-    </div>
-    </div>
     </nav>
   </header>
+
   <%= yield %>
-  </html>
+
+</body>
+</html>

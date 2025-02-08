@@ -52,8 +52,11 @@ Rails.application.routes.draw do
     resources :dashboards, only: [:index, :show]
     resources :users, only: [:show, :destroy]
     
-    resources :groups, only: [:index, :destroy, :show]
+    resources :groups, only: [:index, :destroy, :show] do
+      resources :group_posts, only: [:show]
+    end
     resources :board_comments, only: [:index, :destroy]
+    resources :group_post_comments, only: [:destroy] 
     
     get 'top', to: 'top#index'
 
@@ -83,7 +86,7 @@ Rails.application.routes.draw do
       end
       delete 'destroy_user', on: :member
     end
-    resources :group_posts, only: [:new, :create, :index, :show, :destroy] do
+    resources :group_posts, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
       resources :group_post_comments, only: [:create, :destroy, :edit, :update]
       resource :group_favorites, only: [:create, :destroy]
     end

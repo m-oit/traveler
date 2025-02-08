@@ -17,3 +17,26 @@
     </div>
   <% end %>
 </div>
+
+
+
+
+
+<h5>グループ投稿</h5>
+
+<% @liked_group_posts.each do |group_post| %>
+  <div class="card mb-3">
+    <div class="d-flex align-items-center">
+      <%= link_to group_group_post_path(group_post.group, group_post) do %>
+        <%= image_tag url_for(group_post.image), class: "img-thumbnail me-3", style: "width: 100px; height: 100px; object-fit: cover;" %>
+      <% end %>
+      <div>
+        <h5>
+          <%= link_to group_post.group.name, group_path(group_post.group), class: "text-decoration-none text-dark" %>
+        </h5>
+        <p>投稿者: <%= group_post.user.name %></p>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>

@@ -10,6 +10,18 @@ class EventNoticeEmailsController < ApplicationController
   def show
   end
 
+  def create
+    @event_notice_email = @group.event_notice_emails.new(event_notice_params)
+    @event_notice_email.user = current_user
+    @event_notice_email.sent_at = Time.now
+
+    if @event_notice_email.save
+      redirect_to group_event_notice_emails_path(@group), notice: '通知を送信しました！'
+    else
+      render :new, alert: '通知の送信に失敗しました。'
+    end
+  end
+
   private
 
   def set_group

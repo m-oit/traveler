@@ -14,5 +14,9 @@
 
 </div>
 
-<%= render 'admin/post_images/list', post_images: @post_images %>
-<%= paginate @post_images %>
+<% if @post_images.any? %>
+  <%= render 'admin/post_images/list', post_images: @post_images %>
+  <%= paginate @post_images %>
+<% else %> 
+  <p>投稿はありません。</p>
+<% end %>

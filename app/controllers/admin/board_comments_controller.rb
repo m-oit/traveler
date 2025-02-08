@@ -3,7 +3,15 @@ class Admin::BoardCommentsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @board_comments = BoardComment.all.includes(:user)
+
+    @board_comments = BoardComment.includes(:user).order(created_at: :desc)
+    @group_post_comments = GroupPostComment.includes(:user, group_post: :group).order(created_at: :desc)
+
+
+    if params[:search].present?
+      @board_comments = @board_comments.joins(:user).where('users.name LIKE ? OR board_comments.body LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+      @group_post_comments = @group_post_comments.joins(:user, group_post: :group).where('users.name LIKE ? OR group_post_comments.content LIKE ? OR groups.name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%", "%#{params[:search]}%")
+    end
   end
 
 

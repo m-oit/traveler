@@ -1,82 +1,84 @@
+
 <% if @group_post.present? %>
   <h1 class="text-center mb-4"><%= @group_post.user.name %>の投稿</h1>
 
   <div class="text-center">
-    <% if @group_post.image.attached? %>
-      <%= image_tag @group_post.image, class: 'img-fluid', style: 'max-width: 80%; height: auto;' %>
-    <% else %>
-      <p>画像はありません</p>
-    <% end %>
+  <% if @group_post.image.attached? %>
+    <%= image_tag @group_post.image, class: 'img-fluid', style: 'max-width: 60%; height: auto;' %>
+  <% else %>
+    <p>画像はありません</p>
+  <% end %>
+
+
+<div class="card mt-3" style="max-width: 600px; margin: 0 auto;">
+  <div class="card-body text-start">
+    <p class="card-title"><strong>Title:</strong> <%= @group_post.title %></p>
+    <p class="card-text"><strong>Caption:</strong> <%= @group_post.body %></p>
   </div>
+</div>
 
-  <p class="text-center mt-3"><strong>投稿日時:</strong> <%= @group_post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
-
-  
+<p class="text-center mt-3"><strong>投稿日時:</strong> <%= @group_post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></p>
 
 
-  <% if @group_post.favorited_by?(current_user) %>
-  <p>
+<% if @group_post.favorited_by?(current_user) %>
+  <p class="text-start">
     <%= link_to group_group_post_group_favorites_path(@group_post.group, @group_post), method: :delete do %>
       ♥<%= @group_post.group_favorites.count %> いいね
     <% end %>
   </p>
 <% else %>
-  <p>
+  <p class="text-start">
     <%= link_to group_group_post_group_favorites_path(@group_post.group, @group_post), method: :post do %>
       ♡<%= @group_post.group_favorites.count %> いいね
     <% end %>
   </p>
 <% end %>
 
-  <div class="mt-4 px-4">
-    <p><strong>コメント件数:</strong> <%= @group_post.group_post_comments.count %></p>
-    <% @group_post.group_post_comments.each do |group_post_comment| %>
-      <div class="d-flex align-items-center mb-3 border-bottom pb-2">
-        <%= image_tag group_post_comment.user.get_profile_image(40,40), class: "rounded-circle me-2" %>
-        <p class="mb-0 me-2">
-          <strong class="text-dark"><%= group_post_comment.user.name %></strong>
-          <span class="ms-2">/</span>
-          <span class="ms-2 text-muted"><%= group_post_comment.created_at.strftime('%Y/%m/%d') %></span>
-        </p>
-      </div>
-      <div class="mb-2 ps-4">
-        <p><%= group_post_comment.content %></p>
-      </div>
-
-      <% if group_post_comment.user == current_user %>
-          <div class="mb-3 ps-4">
-      <%= link_to "コメントを編集", edit_group_group_post_group_post_comment_path(@group_post.group, @group_post, group_post_comment), class: "btn btn-sm btn-outline-primary" %>
-      <%= link_to "コメントを削除", group_group_post_group_post_comment_path(@group_post.group, @group_post, group_post_comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
+<div class="mt-4 px-4">
+  <p><strong>コメント件数:</strong> <%= @group_post.group_post_comments.count %></p>
+  <% @group_post.group_post_comments.each do |group_post_comment| %>
+    <div class="mb-3 border-bottom pb-2" style="text-align: left;">
+      <%= image_tag group_post_comment.user.get_profile_image(40,40), class: "rounded-circle me-2", style: "display: inline-block;" %>
+      <p class="mb-0 me-2" style="display: inline-block;">
+        <strong class="text-dark"><%= group_post_comment.user.name %></strong>
+        <span class="ms-2">/</span>
+        <span class="ms-2 text-muted"><%= group_post_comment.created_at.strftime('%Y/%m/%d') %></span>
+      </p>
     </div>
-  <% end %>
+    <div class="mb-2 ps-4" style="text-align: left;">
+      <p><%= group_post_comment.content %></p>
+    </div>
 
+    <% if group_post_comment.user == current_user %>
+      <div class="mb-3 ps-4" style="text-align: left;">
+        <%= link_to "コメントを編集", edit_group_group_post_group_post_comment_path(@group_post.group, @group_post, group_post_comment), class: "btn btn-sm btn-outline-primary" %>
+        <%= link_to "コメントを削除", group_group_post_group_post_comment_path(@group_post.group, @group_post, group_post_comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-sm btn-outline-danger" %>
+      </div>
     <% end %>
-  </div>
+  <% end %>
+</div>
 
 
 
-
+  <% if @group.owner == current_user || @group.group_users.exists?(user_id: current_user.id) %>
   <div class="mt-4 px-4">
-    <%= form_with model: [@group_post, @group_post_comment], url: group_group_post_group_post_comments_path(@group.id,@group_post.id), class: "form-group" do |f| %>
+    <%= form_with model: [@group_post, @group_post_comment], url: group_group_post_group_post_comments_path(@group.id, @group_post.id), class: "form-group" do |f| %>
       <%= f.text_area :content, rows: '5', class: "form-control", placeholder: "コメントを入力してください！" %>
       <div class="form-group mt-3 text-end">
         <%= f.submit "送信する", class: "btn btn-primary" %>
       </div>
     <% end %>
   </div>
-
+<% end %>
 
   
 
 
-  <% if current_user == @group_post.user || current_user == @group.owner %>
-    <div class="text-center mt-3">
-      <%= link_to '削除', group_group_post_path(@group, @group_post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
-    </div>
-
-
-<% else %>
-  <p class="text-center">投稿が見つかりませんでした。</p>
+<% if @group_post.present? && (current_user == @group_post.user || current_user == @group.owner) %>
+  <div class="text-center mt-3">
+    <%= link_to '編集', edit_group_group_post_path(@group, @group_post), class: 'btn btn-warning' %>
+    <%= link_to '削除', group_group_post_path(@group, @group_post), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+  </div>
 <% end %>
 
 <%= link_to '戻る', group_path(@group) %>

@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.where.not(id: User.guest.id)
   end
   
   def edit
@@ -32,6 +32,7 @@ end
   def likes
     @user = User.find(params[:id])
     @liked_posts = @user.liked_posts
+    @liked_group_posts = @user.group_favorites.includes(:group_post).map(&:group_post) 
   end
 
   def groups

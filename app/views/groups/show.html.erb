@@ -1,4 +1,4 @@
-<div class="group-header" style="display: flex; align-items: center; gap: 10px;">
+<div class="group-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
   <% if @group.post_image.attached? %>
     <%= image_tag @group.post_image, alt: 'Group Image', class: 'group-thumbnail', style: 'width: 40px; height: 40px; object-fit: cover; border-radius: 50%;' %>
   <% else %>
@@ -8,16 +8,37 @@
 </div>
 
 
-
-
-
 <%= form_with model: [@group, @group_post], local: true do |f| %>
-  <div class="form-group">
-    <%= f.label :image, "画像を選択" %>
-    <%= f.file_field :image, required: true %>
+  <div class="container-fluid" style="max-width: 500px; margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 30px;">
+
+    <div class="card">
+      <div class="card-header">
+        <h5>投稿フォーム</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <%= f.label :title, "タイトル", class: "form-label" %>
+          <%= f.text_field :title, required: true, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :body, "本文", class: "form-label" %>
+          <%= f.text_area :body, required: true, class: "form-control", rows: 4 %>
+        </div>
+
+        <div class="mb-3">
+          <%= f.label :image, "画像を選択", class: "form-label" %>
+          <%= f.file_field :image, required: true, class: "form-control" %>
+        </div>
+
+        <div>
+          <%= f.submit "投稿する", class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
   </div>
-  <%= f.submit "投稿する", class: "btn btn-primary" %>
 <% end %>
+
 
 <h2>投稿された画像</h2>
 
@@ -81,7 +102,7 @@
     </div>
 
     <% if @group.users.include?(current_user) || @group.owner == current_user %> 
-      <!-- グループのオーナーまたはメンバーのみコメント投稿できるフォーム -->
+      
       <div class="mt-4">
         <%= form_with model: [@group, BoardComment.new], local: true do |f| %>
           <div class="form-group mb-3">
@@ -139,24 +160,36 @@
   <% end %>
 </div>
 
-<% if @group.group_users.exists?(user_id: current_user.id) %>
-  <%= link_to 'グループから退出', group_group_user_path(@group, current_user), method: :delete, data: { confirm: '本当にグループから退出しますか？' } %>
-<% elsif @group.permits.exists?(user_id: current_user.id) %>
-  <%= link_to '申請取消', group_permits_path(@group), method: :delete, class: "btn btn-sm btn-danger" %>
-<% elsif @group.owner != current_user %>
-  <%= link_to '加入申請', group_permits_path(@group), method: :post, class: "btn btn-sm btn-success" %>
+
+
+<% if @group.owner == current_user || @group.group_users.exists?(user_id: current_user.id) %>
+  <div class="mt-4">
+    <%= link_to '通知一覧', group_event_notice_emails_path(@group), class: "btn btn-info btn-sm mb-3" %>
+  </div>
 <% end %>
 
-
-  <h3><%= link_to '通知一覧', group_event_notice_emails_path(@group) %></h3>
-
-
-<div class="group-actions">
-  <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>
   <% if @group.is_owned_by?(current_user) %>
-  <%= link_to "承認待ち一覧", group_permits_path(@group), class: "dropdown-item text-secondary bg-transparent" %>
-  <%= link_to '新しいイベント通知を作成', new_group_event_notice_path(@group), class: 'btn btn-primary' %>
-    <%= link_to 'グループを編集', edit_group_path(@group), class: 'btn btn-warning' %>
-    <%= link_to 'グループ削除', group_path(@group), method: :delete,  class: "dropdown-item text-danger bg-transparent", data: { confirm: "本当に削除しますか？" } %>
-    <% end %>
-</div>
+    <div class="mt-3">
+      <%= link_to "承認待ち一覧", group_permits_path(@group), class: "btn btn-outline-secondary btn-sm mb-3" %>
+    </div>
+
+    <div class="mt-3">
+      <div class="d-flex">
+        <%= link_to '新しいイベント通知を作成', new_group_event_notice_path(@group), class: 'btn btn-primary btn-sm mr-3' %>
+        <%= link_to 'グループを編集', edit_group_path(@group), class: 'btn btn-warning btn-sm mr-3' %>
+        <%= link_to 'グループ削除', group_path(@group), method: :delete, class: "btn btn-danger btn-sm mr-3", data: { confirm: "本当に削除しますか？" } %>
+      </div>
+    </div>
+  <% end %>
+
+  <% if @group.group_users.exists?(user_id: current_user.id) %>
+    <%= link_to 'グループから退出', group_group_user_path(@group, current_user), method: :delete, data: { confirm: '本当にグループから退出しますか？' }, class: "btn btn-danger btn-sm mb-3" %>
+  <% elsif @group.permits.exists?(user_id: current_user.id) %>
+    <%= link_to '申請取消', group_permits_path(@group), method: :delete, class: "btn btn-danger btn-sm mb-3" %>
+  <% elsif @group.owner != current_user %>
+    <%= link_to '加入申請', group_permits_path(@group), method: :post, class: "btn btn-success btn-sm mb-3" %>
+  <% end %>
+
+  <div class="group-actions mt-4">
+    <%= link_to 'グループ一覧に戻る', groups_path, class: 'btn btn-secondary' %>
+  </div>

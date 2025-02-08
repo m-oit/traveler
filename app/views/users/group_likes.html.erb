@@ -1,8 +1,0 @@
-<h1><%= @user.name %> のいいねしたグループ投稿一覧</h1>
-
-<% @favorite_group_posts.each do |post| %>
-  <div class="post">
-    <h2><%= link_to post.title, group_post_path(post) %></h2>
-    <p><%= post.content %></p>
-  </div>
-<% end %>

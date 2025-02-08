@@ -10,10 +10,42 @@
   <% end %>
 <% end %>
 
-<h2>グループコメント管理</h2>
 
-<% if @board_comments.empty? %>
-  <p>コメントはありません。</p>
+<h2>グループコメント一覧</h2>
+<% if params[:search].present? && @group_post_comments.empty? %>
+  <p>検索結果が見つかりませんでした。</p>
+<% elsif @group_post_comments.empty? %>
+  <p>グループ掲示板コメントはありません。</p>
+<% else %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ユーザー</th>
+        <th>コメント内容</th>
+        <th>グループ名</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @group_post_comments.each do |comment| %>
+        <tr>
+          <td><%= comment.user.name %></td>
+          <td><%= comment.content %></td>
+          <td><%= comment.group_post.group.name %></td>
+          <td>
+            <%= link_to '削除', admin_group_post_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<h2>掲示板コメント一覧</h2>
+<% if params[:search].present? && @board_comments.empty? && @group_post_comments.empty? %>
+  <p>検索結果が見つかりませんでした。</p>
+<% elsif @board_comments.empty? %>
+  <p>掲示板コメントはありません。</p>
 <% else %>
   <table class="table">
     <thead>
