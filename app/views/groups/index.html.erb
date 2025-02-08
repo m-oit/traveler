@@ -36,11 +36,7 @@
           <h5 class="card-title"><%= group.name %></h5>
           <p class="card-text"><%= truncate(group.introduction, length: 100) %></p>
           <div class="d-flex justify-content-between align-items-center">
-          <% if group.owner.present? %>
             <span><i class="fas fa-user"></i> By <%= link_to group.owner.name, user_path(group.owner.id) %> | <%= group.users.count %> メンバー</span>
-            <% else %>
-            <span><i class="fas fa-user"></i> オーナーなし | <%= group.users.count %> メンバー</span>
-             <% end %>
             </div>
           <%= link_to '詳細を見る', group_path(group), class: 'btn btn-primary' %>
         </div>
