@@ -6,12 +6,14 @@ class GroupsController < ApplicationController
     @group =Group.new
   end
 
-  def index
-    @post_image = PostImage.new
-    if params[:search].present?
-      @groups = Group.joins(:owner).where('groups.name LIKE ? OR users.name LIKE ?', "%#{params[:search]}%", "%#{params[:search]}%")
+  def create
+    @group = Group.new(group_params)
+    @group.owner_id = current_user.id
+    if @group.save
+      GroupUser.create!(user_id: @group.owner_id, group_id: @group.id)
+      redirect_to groups_path
     else
-      @groups = Group.all
+      render 'new'
     end
   end
 
@@ -29,7 +31,6 @@ class GroupsController < ApplicationController
     @group = Group.new(group_params)
     @group.owner_id = current_user.id
     if @group.save
-      GroupUser.create!(user_id: @group.owner_id, group_id: @group.id)
       redirect_to groups_path
     else
       render 'new'
