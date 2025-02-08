@@ -1,34 +1,37 @@
-<%= form_with url: admin_post_comments_path, method: :get, local: true, class: 'form-inline' do |f| %>
-  <div class="form-group">
-    <%= f.label :search, '検索: ' %>
-    <%= f.text_field :search, class: 'form-control', placeholder: 'ユーザー名またはコメント', value: params[:search] %>
+<%= form_with url: admin_post_comments_path, method: :get, local: true, class: 'form-inline mb-4' do |f| %>
+  <div class="form-group d-flex justify-content-center align-items-center">
+    <%= f.label :search, '検索: ', class: 'mr-2' %>
+    <%= f.text_field :search, class: 'form-control mr-2', placeholder: 'ユーザー名またはコメント', value: params[:search], style: 'max-width: 300px;' %>
+    <%= f.submit '検索', class: 'btn btn-primary' %>
   </div>
-  <%= f.submit '検索', class: 'btn btn-primary' %>
   <% if params[:search].present? %>
     <%= link_to 'リセット', admin_post_comments_path, class: 'btn btn-secondary ml-2' %>
   <% end %>
 <% end %>
 
+<h1 class="mb-4">コメント一覧</h1>
 
-<h1>コメント一覧</h1>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>ユーザー名</th>
-      <th>コメント</th>
-      <th>操作</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @post_comments.each do |comment| %>
+<% if @post_comments.empty? %>
+  <p>コメントはありません。</p>
+<% else %>
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= comment.user.name %></td>
-        <td><%= comment.comment %></td>
-        <td>
-          <%= link_to '削除', admin_post_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
-        </td>
+        <th>ユーザー名</th>
+        <th>コメント</th>
+        <th>操作</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @post_comments.each do |comment| %>
+        <tr>
+          <td><%= comment.user.name %></td>
+          <td><%= comment.comment %></td>
+          <td>
+            <%= link_to '削除', admin_post_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

@@ -1,23 +1,18 @@
-<%= form_with(url: admin_board_comments_path, method: :get, class: 'form-inline') do %>
-  <div class="form-group">
+<%= form_with(url: admin_board_comments_path, method: :get, class: 'form-inline mb-4') do %>
+  <div class="form-group d-flex justify-content-center align-items-center">
     <%= label_tag :search, '検索:', class: 'mr-2' %>
-    <%= text_field_tag :search, params[:search], class: 'form-control mr-2', placeholder: 'ユーザー名またはコメント' %>
+    <%= text_field_tag :search, params[:search], class: 'form-control mr-2', placeholder: 'ユーザー名またはコメント', style: 'max-width: 300px;' %>
     <%= submit_tag '検索', class: 'btn btn-primary' %>
   </div>
-
-  <% if params[:search].present? %>
-    <%= link_to 'リセット', admin_board_comments_path(@group), class: 'btn btn-secondary ml-2' %>
-  <% end %>
 <% end %>
 
-
-<h2>グループコメント一覧</h2>
+<h2 class="mb-4">グループコメント一覧</h2>
 <% if params[:search].present? && @group_post_comments.empty? %>
   <p>検索結果が見つかりませんでした。</p>
 <% elsif @group_post_comments.empty? %>
   <p>グループ掲示板コメントはありません。</p>
 <% else %>
-  <table class="table">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>ユーザー</th>
@@ -33,7 +28,7 @@
           <td><%= comment.content %></td>
           <td><%= comment.group_post.group.name %></td>
           <td>
-            <%= link_to '削除', admin_group_post_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+            <%= link_to '削除', admin_group_post_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %>
           </td>
         </tr>
       <% end %>
@@ -41,13 +36,13 @@
   </table>
 <% end %>
 
-<h2>掲示板コメント一覧</h2>
+<h2 class="mt-5 mb-4">掲示板コメント一覧</h2>
 <% if params[:search].present? && @board_comments.empty? && @group_post_comments.empty? %>
   <p>検索結果が見つかりませんでした。</p>
 <% elsif @board_comments.empty? %>
   <p>掲示板コメントはありません。</p>
 <% else %>
-  <table class="table">
+  <table class="table table-striped">
     <thead>
       <tr>
         <th>ユーザー</th>
@@ -61,7 +56,7 @@
           <td><%= comment.user.name %></td>
           <td><%= comment.body %></td>
           <td>
-            <%= link_to '削除', admin_board_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+            <%= link_to '削除', admin_board_comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger btn-sm' %>
           </td>
         </tr>
       <% end %>
