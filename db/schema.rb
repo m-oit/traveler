@@ -93,10 +93,9 @@ ActiveRecord::Schema.define(version: 2025_02_08_045728) do
 
   create_table "group_favorites", force: :cascade do |t|
     t.integer "user_id"
-    t.integer "post_image_id"
+    t.integer "group_post_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "group_post_id"
   end
 
   create_table "group_post_comments", force: :cascade do |t|
@@ -160,7 +159,6 @@ ActiveRecord::Schema.define(version: 2025_02_08_045728) do
     t.string "title"
     t.text "caption"
     t.integer "user_id"
-    t.integer "group_id"
   end
 
   create_table "relationships", force: :cascade do |t|
