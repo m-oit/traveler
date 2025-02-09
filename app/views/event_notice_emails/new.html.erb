@@ -1,12 +1,12 @@
-<%= form_with model: [ @group, @event_notice ] do |form| %>
+<%= form_with model: [ @group, @event_notice_email ] do |form| %>
   <div class="form-group mt-3">
     <%= form.label :title, class: 'font-weight-bold text-muted' %>
     <%= form.text_field :title, class: "form-control border-secondary rounded-lg shadow-sm w-75" %>
   </div>
 
   <div class="form-group mt-3">
-    <%= form.label :description, class: 'font-weight-bold text-muted' %>
-    <%= form.text_area :description, class: "form-control border-secondary rounded-lg shadow-sm w-75", rows: 3 %>
+    <%= form.label :body, class: 'font-weight-bold text-muted' %> 
+    <%= form.text_area :body, class: "form-control border-secondary rounded-lg shadow-sm w-75", rows: 3 %> 
   </div>
 
   <div class="form-group mt-3">

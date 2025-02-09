@@ -1,28 +1,15 @@
 class EventNoticesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_group
+  before_action :set_event_notice, only: [:show]
 
-
-  def new
-    @event_notice = @group.event_notices.new
+  def index
+    @event_notices_emails = @group.event_notice_emails.where(user_id: current_user.id)
+    #@event_notice_emails = current_user.event_notice_emails.()
   end
 
-
-  def create
-    @event_notice = @group.event_notices.new(event_notice_params)
-
-    if @event_notice.save
-
-      EventNoticeMailer.send_event_notice(@event_notice, @group).deliver_later
-      EventNoticeMailer.send_event_notice_to_owner(@event_notice, @group).deliver_later
-
-      redirect_to sent_group_event_notices_path(@group), notice: 'Event notice created and emails sent successfully.'
-    else
-      render :new
-    end
-  end
-
-  def sent
-    @event_notice = EventNotice.last
+  def show
+    @event_notices_email = EventNoticeEmail.find_by(group_id: params[:group_id],id: params[:id])
   end
 
   private
@@ -31,7 +18,9 @@ class EventNoticesController < ApplicationController
     @group = Group.find(params[:group_id])
   end
 
-  def event_notice_params
-    params.require(:event_notice).permit(:title, :description, :event_date)
+  def set_event_notice
+
+    @event_notice_email = @group.event_notice_emails.find_by(id: params[:id])
+    redirect_to group_event_notices_path(@group), alert: 'Event notice not found.' unless @event_notice_email
   end
 end

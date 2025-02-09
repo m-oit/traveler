@@ -22,19 +22,19 @@ class GroupPostsController < ApplicationController
   end
 
   def show
-    @group = Group.find(params[:group_id])
-    @group_post = GroupPost.find(params[:id])
-    @group_post_comments = @group_post.group_post_comments
-    @group_post_comment = GroupPostComment.new
+    @group = Group.find(params[:group_id]) 
     @group_post = @group.group_posts.find_by(id: params[:id])
+    
     if @group_post.nil?
       redirect_to group_group_posts_path(@group), alert: '投稿が見つかりません。'
     else
       @group_post_comments = @group_post.group_post_comments
+      @group_post_comment = GroupPostComment.new 
       @group_posts = @group.group_posts.order(created_at: :desc).limit(3)
       @all_group_posts = @group.group_posts.order(created_at: :desc)
     end
   end
+  
 
 
   def edit

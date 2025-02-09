@@ -24,6 +24,17 @@ class GroupUsersController < ApplicationController
       redirect_to @group, alert: 'グループから退出できませんでした。'
     end
   end
+
+  def destroy_user
+    user = @group.users.find(params[:id])
+
+    if user != @group.owner
+      @group.users.delete(user)
+      redirect_to @group, notice: "#{user.name}さんはグループから削除されました。"
+    else
+      redirect_to @group, alert: "オーナーは削除できません。"
+    end
+  end
   
 
   def update
@@ -54,5 +65,9 @@ class GroupUsersController < ApplicationController
 
   def set_group
     @group = Group.find(params[:group_id])
+  end
+
+  def check_owner
+    redirect_to groups_path, alert: '権限がありません。' unless @group.owner == current_user
   end
 end

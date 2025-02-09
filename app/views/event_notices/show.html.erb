@@ -1,0 +1,13 @@
+<div class="container mt-4">
+  <div class="row justify-content-start">
+    <div class="col-8">
+      <h1 class="mb-4"><%= @event_notice_email.title %></h1>
+      <p><%= @event_notice_email.body %></p>
+      <p><strong>日時:</strong> <%= @event_notice_email.event_date %></p>
+      
+      <div class="mt-3">
+        <%= link_to '戻る', group_event_notices_path(@group), class: 'btn btn-secondary' %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -69,16 +69,18 @@ Rails.application.routes.draw do
   resources :groups do
     member do
       get 'group_likes'
+      delete 'users/:user_id', to: 'groups#destroy_user', as: 'destroy_user'
     end
     resources :permits, only: [:show, :create, :destroy, :index]
     resources :board_comments, only: [:create, :destroy]
-    resources :event_notices, only: [:new, :create] do
-      collection do
+    resources :event_notices, only: [:index, :show]
+    resources :event_notice_emails, only: [:new, :create, :sent] do
+      member do
         get :sent 
       end
     end
     
-    resources :event_notice_emails, only: [:index, :show]
+
 
     resources :group_users, only: [:create, :destroy] do
       member do

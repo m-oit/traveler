@@ -1,0 +1,25 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-8">
+      <h1 class="text-center mb-4">送信が完了しました</h1>
+      <p class="text-center mb-4">内容は以下の通りです。</p>
+
+      <% if @event_notice_email %>
+        <div class="card shadow-sm mb-4">
+          <div class="card-body">
+            <h2 class="card-title">タイトル</h2>
+            <p class="card-text"><%= @event_notice_email.title %></p>
+
+            <h2 class="card-title">本文</h2>
+            <p class="card-text"><%= @event_notice_email.body %></p> 
+          </div>
+        </div>
+      <% end %>
+
+      <div class="text-center mt-4">
+        <a href="<%= group_path(@group) %>" class="btn btn-primary">グループに戻る</a>
+      </div>
+
+    </div>
+  </div>
+</div>

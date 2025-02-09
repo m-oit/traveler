@@ -156,6 +156,11 @@
             <% end %>
             <%= user.name %>
           <% end %>
+
+          <% if @group.owner == current_user && user != current_user %>
+          <%= link_to "削除", destroy_user_group_group_user_path(@group, user), method: :delete, data: { confirm: "本当にこのユーザーを削除しますか?" }, class: "btn btn-danger btn-sm" %>
+        <% end %>
+          
         </li>
       <% end %>
     </ul>
@@ -168,7 +173,7 @@
 
 <% if @group.owner == current_user || @group.group_users.exists?(user_id: current_user.id) %>
   <div class="mt-4">
-    <%= link_to '通知一覧', group_event_notice_emails_path(@group), class: "btn btn-info btn-sm mb-3" %>
+    <%= link_to 'イベント通知一覧', group_event_notices_path(@group), class: "btn btn-info btn-sm mb-3" %>
   </div>
 <% end %>
 
@@ -179,7 +184,7 @@
 
     <div class="mt-3">
       <div class="d-flex">
-        <%= link_to '新しいイベント通知を作成', new_group_event_notice_path(@group), class: 'btn btn-primary btn-sm mr-3' %>
+        <%= link_to '新しいイベント通知メールを作成', new_group_event_notice_email_path(@group), class: 'btn btn-primary btn-sm mr-3' %>
         <%= link_to 'グループを編集', edit_group_path(@group), class: 'btn btn-warning btn-sm mr-3' %>
         <%= link_to 'グループ削除', group_path(@group), method: :delete, class: "btn btn-danger btn-sm mr-3", data: { confirm: "本当に削除しますか？" } %>
       </div>

@@ -16,15 +16,19 @@ class GroupPostCommentsController < ApplicationController
 
   def show
     @group_post_image = GroupPost.find(params[:id])
+    @group_post = @group.group_posts.find(params[:id])
     @group_post_comment = GroupPost.new
+    @comments = @group_post.group_post_comments 
   end
 
 
   def destroy
     @group_post_comment = GroupPostComment.find(params[:id])
-    group_post = @group_post_comment.group_post
-    @group_post_comment.destroy
-    redirect_to group_group_post_path(group_post.group, group_post)
+    if @group_post_comment.destroy
+      redirect_to group_group_post_path(@group_post_comment.group_post.group, @group_post_comment.group_post), notice: "コメントが削除されました。"
+    else
+      redirect_to group_group_post_path(@group_post_comment.group_post.group, @group_post_comment.group_post), alert: "コメントの削除に失敗しました。"
+    end
   end
 
   def edit
@@ -51,8 +55,8 @@ class GroupPostCommentsController < ApplicationController
   end
 
   def correct_user
-    if @group_post_comment.user != current_user 
-      redirect_to group_post_path(@group_post_comment.group_post), alert: "あなたはこのコメントを編集できません。"
+    unless @group_post_comment.user == current_user || @group_post_comment.group_post.group.owner == current_user
+      redirect_to group_group_post_path(@group_post_comment.group_post.group, @group_post_comment.group_post), alert: "コメントを削除する権限がありません。"
     end
   end
 
