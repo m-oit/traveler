@@ -19,21 +19,22 @@
     <p class="text-center">オーナーのグループはありません。</p>
   <% end %>
 
-  <h3 class="mt-4 mb-3">所属しているグループ</h3>
-  <% if @groups.present? %>
-    <ul class="list-unstyled">
-      <% @groups.each do |group| %>
-        <li class="mb-3 d-flex align-items-center">
-          <% if group.post_image.attached? %> 
-            <%= image_tag group.post_image, alt: 'Group Image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
-          <% else %>
-            <%= image_tag 'no_image.jpg', alt: 'No image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
-          <% end %>
-          <h5 class="mb-0 ms-3 text-dark"><%= link_to group.name, group_path(group), class: 'text-decoration-none text-dark' %></h5>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p class="text-center">所属しているグループはありません。</p>
-  <% end %>
+<h3 class="mt-4 mb-3">所属しているグループ</h3>
+<% if @groups.present? %>
+  <ul class="list-unstyled">
+    <% @groups.each do |group| %>
+      <% next if group.owner_id == current_user.id %> 
+      <li class="mb-3 d-flex align-items-center">
+        <% if group.post_image.attached? %> 
+          <%= image_tag group.post_image, alt: 'Group Image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
+        <% else %>
+          <%= image_tag 'no_image.jpg', alt: 'No image', class: 'rounded-circle', style: 'width: 60px; height: 60px; object-fit: cover; margin-right: 15px;' %>
+        <% end %>
+        <h5 class="mb-0 ms-3 text-dark"><%= link_to group.name, group_path(group), class: 'text-decoration-none text-dark' %></h5>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-center">所属しているグループはありません。</p>
+<% end %>
 </div>

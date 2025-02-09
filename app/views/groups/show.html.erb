@@ -8,35 +8,39 @@
 </div>
 
 
-<%= form_with model: [@group, @group_post], local: true do |f| %>
-  <div class="container-fluid" style="max-width: 500px; margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 30px;">
+<% if @group.owner == current_user || @group.group_users.exists?(user_id: current_user.id) %>
+  <%= form_with model: [@group, @group_post], local: true do |f| %>
+    <div class="container-fluid" style="max-width: 500px; margin-left: 0; margin-right: 0; margin-top: 30px; margin-bottom: 30px;">
 
-    <div class="card">
-      <div class="card-header">
-        <h5>投稿フォーム</h5>
-      </div>
-      <div class="card-body">
-        <div class="mb-3">
-          <%= f.label :title, "タイトル", class: "form-label" %>
-          <%= f.text_field :title, required: true, class: "form-control" %>
+      <div class="card">
+        <div class="card-header">
+          <h5>投稿フォーム</h5>
         </div>
+        <div class="card-body">
+          <div class="mb-3">
+            <%= f.label :title, "タイトル", class: "form-label" %>
+            <%= f.text_field :title, required: true, class: "form-control" %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :body, "本文", class: "form-label" %>
-          <%= f.text_area :body, required: true, class: "form-control", rows: 4 %>
-        </div>
+          <div class="mb-3">
+            <%= f.label :body, "本文", class: "form-label" %>
+            <%= f.text_area :body, required: true, class: "form-control", rows: 4 %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :image, "画像を選択", class: "form-label" %>
-          <%= f.file_field :image, required: true, class: "form-control" %>
-        </div>
+          <div class="mb-3">
+            <%= f.label :image, "画像を選択", class: "form-label" %>
+            <%= f.file_field :image, required: true, class: "form-control" %>
+          </div>
 
-        <div>
-          <%= f.submit "投稿する", class: "btn btn-primary" %>
+          <div>
+            <%= f.submit "投稿する", class: "btn btn-primary" %>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  <% end %>
+<% else %>
+  <p>投稿フォームはグループのオーナーまたはメンバーのみが利用できます。</p>
 <% end %>
 
 

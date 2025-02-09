@@ -3,7 +3,7 @@ class GroupPost < ApplicationRecord
   belongs_to :user
   has_one_attached :image
   has_many :group_post_comments, dependent: :destroy
-  has_many :group_favorites
+  has_many :group_favorites, dependent: :destroy
   
   validates :image, presence: true
 

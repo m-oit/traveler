@@ -11,7 +11,10 @@ class EventNoticesController < ApplicationController
     @event_notice = @group.event_notices.new(event_notice_params)
 
     if @event_notice.save
+
       EventNoticeMailer.send_event_notice(@event_notice, @group).deliver_later
+      EventNoticeMailer.send_event_notice_to_owner(@event_notice, @group).deliver_later
+
       redirect_to sent_group_event_notices_path(@group), notice: 'Event notice created and emails sent successfully.'
     else
       render :new

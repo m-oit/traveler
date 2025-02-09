@@ -4,11 +4,10 @@ class Group < ApplicationRecord
     has_many :group_users, dependent: :destroy
     has_many :users, through: :group_users
     has_many :board_comments, dependent: :destroy
-    has_many :group_posts
+    has_many :group_posts, dependent: :destroy
     has_many :permits, dependent: :destroy
-    has_many :users, through: :group_users, source: :user
-    has_many :event_notices
-    has_many :event_notice_emails
+    has_many :event_notices, dependent: :destroy
+    has_many :event_notice_emails, dependent: :destroy
     has_many :group_post_comments, dependent: :destroy
     
   
