@@ -14,7 +14,7 @@
           <%= image_tag post_image.user.get_profile_image(50, 50), class: "rounded-circle" %>
         <% end %></td>
         <td><%= link_to post_image.title, post_image, class: "post_image_#{post_image.id}" %></td>
-        <td><%= post_image.caption %></td>
+        <td><%= truncate(post_image.caption, length: 20, omission: '...') %></td>
       </tr>
     <% end %>
   </tbody>

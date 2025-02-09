@@ -11,7 +11,7 @@
     <% @groups.each do |group| %>
       <tr>
         <td><%= link_to group.name, admin_group_path(group) %></td>
-        <td><%= group.owner.name %></td> 
+        <td><%= group.owner.present? ? group.owner.name : "オーナーなし" %></td>
         <td>
           <%= link_to '削除', admin_group_path(group), 
                       method: :delete, 
