@@ -27,7 +27,7 @@
   <% @groups.each do |group| %>
     <div class="col mb-4"> 
       <div class="card h-100">
-        <% if group.post_image.attached? %>  <!-- group.image → group.post_image に変更 -->
+        <% if group.post_image.attached? %> 
           <%= image_tag group.post_image.variant(resize: "200x200"), class: 'card-img-top', style: 'max-height: 200px; object-fit: contain; width: 100%;' %>  <!-- group.image → group.post_image に変更 -->
         <% else %>
           <%= image_tag 'no_image.jpg', class: 'card-img-top', style: 'max-height: 200px; object-fit: contain; width: 100%;' %>
@@ -36,7 +36,15 @@
           <h5 class="card-title"><%= group.name %></h5>
           <p class="card-text"><%= truncate(group.introduction, length: 100) %></p>
           <div class="d-flex justify-content-between align-items-center">
-            <span><i class="fas fa-user"></i> By <%= link_to group.owner.name, user_path(group.owner.id) %> | <%= group.users.count %> メンバー</span>
+          <span>
+          <i class="fas fa-user"></i> By 
+          <% if group.owner.present? %>
+            <%= link_to group.owner.name, user_path(group.owner.id) %>
+          <% else %>
+            オーナーなし
+          <% end %> | 
+          <%= group.users.count %> メンバー
+        </span>
             </div>
           <%= link_to '詳細を見る', group_path(group), class: 'btn btn-primary' %>
         </div>
