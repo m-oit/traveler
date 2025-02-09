@@ -143,31 +143,31 @@
 <div class="group-details">
   <p><strong>紹介文:</strong> <%= @group.introduction %></p>
 
-  <p><strong>参加ユーザー一覧</strong>
+  <p><strong>参加ユーザー一覧</strong></p>
   <% if @group.users.any? %>
-    <ul>
+    <ul class="list-group">
       <% @group.users.each do |user| %>
-        <li>
-          <%= link_to user_path(user) do %>
-            <% if user.profile_image.attached? %>
-              <%= image_tag user.profile_image, alt: "#{user.name} Profile", class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;' %>
-            <% else %>
-              <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: 'width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;' %>
+        <li class="list-group-item d-flex align-items-center justify-content-between">
+          <div class="d-flex align-items-center">
+            <%= link_to user_path(user), class: "d-flex align-items-center text-decoration-none text-dark" do %>
+              <% if user.profile_image.attached? %>
+                <%= image_tag user.profile_image, alt: "#{user.name} Profile", class: "profile-thumbnail", style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+              <% else %>
+                <%= image_tag "no_image.jpg", alt: "No image", class: "profile-thumbnail", style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+              <% end %>
+              <span class="fw-bold"><%= user.name %></span>
             <% end %>
-            <%= user.name %>
-          <% end %>
-
+          </div>
+  
           <% if @group.owner == current_user && user != current_user %>
-          <%= link_to "削除", destroy_user_group_group_user_path(@group, user), method: :delete, data: { confirm: "本当にこのユーザーを削除しますか?" }, class: "btn btn-danger btn-sm" %>
-        <% end %>
-          
+            <%= link_to "削除", destroy_user_group_group_user_path(@group, user), method: :delete, data: { confirm: "本当にこのユーザーを削除しますか?" }, class: "btn btn-danger btn-sm" %>
+          <% end %>
         </li>
       <% end %>
     </ul>
   <% else %>
     <p>メンバーはいません。</p>
   <% end %>
-</div>
 
 
 

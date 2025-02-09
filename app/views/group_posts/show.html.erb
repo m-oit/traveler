@@ -48,16 +48,17 @@
           <p><%= group_post_comment.content %></p>
         </div>
 
-        <% if group_post_comment.user == current_user %>
-          <div class="mb-3 ps-4" style="text-align: left;">
-            <%= link_to "コメントを編集", edit_group_group_post_group_post_comment_path(@group, @group_post, group_post_comment), class: "btn btn-sm btn-outline-primary" %>
-          </div>
-        <% end %>
         <% if group_post_comment.user == current_user || @group_post.group.owner == current_user %>
-          <div class="mb-3 ps-4" style="text-align: left;">
+        <div class="mb-3 ps-4 d-flex gap-2">
+          <% if group_post_comment.user == current_user %>
+            <%= link_to "コメントを編集", edit_group_group_post_group_post_comment_path(@group, @group_post, group_post_comment), class: "btn btn-sm btn-outline-primary" %>
+          <% end %>
+          
+          <% if group_post_comment.user == current_user || @group_post.group.owner == current_user %>
             <%= link_to "コメントを削除", group_group_post_group_post_comment_path(@group, @group_post, group_post_comment), method: :delete, data: { confirm: "本当にこのコメントを削除しますか?" }, class: "btn btn-danger btn-sm" %>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
+      <% end %>
       <% end %>
     <% else %>
       <p>コメントはまだありません。</p> 
