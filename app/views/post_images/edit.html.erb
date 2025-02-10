@@ -18,6 +18,11 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :caption %>
+    <%= f.text_area :caption, class: "form-control", rows: 5 %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :image %>
     <%= f.file_field :image, class: "form-control" %>
   </div>
