@@ -24,6 +24,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @permits = @group.permits
     @group_posts = @group.group_posts
     @group_post = @group.group_posts.new
     @group_posts.each do |group_post|

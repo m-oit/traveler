@@ -193,8 +193,9 @@
 
   <% if @group.group_users.exists?(user_id: current_user.id) %>
     <%= link_to 'グループから退出', group_group_user_path(@group, current_user), method: :delete, data: { confirm: '本当にグループから退出しますか？' }, class: "btn btn-danger btn-sm mb-3" %>
-  <% elsif @group.permits.exists?(user_id: current_user.id) %>
-    <%= link_to '申請取消', group_permits_path(@group), method: :delete, class: "btn btn-danger btn-sm mb-3" %>
+  <% elsif (permit = @group.permits.find_by(user_id: current_user.id)) %>
+  <%= link_to '申請取消', group_permit_path(@group, permit), method: :delete, class: "btn btn-danger btn-sm mb-3" %>
+
   <% elsif @group.owner != current_user %>
     <%= link_to '加入申請', group_permits_path(@group), method: :post, class: "btn btn-success btn-sm mb-3" %>
   <% end %>
