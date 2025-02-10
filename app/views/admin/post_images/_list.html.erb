@@ -17,8 +17,8 @@
             </p>
             <p class="card-text mb-0" style="font-size: 12px;">Caption: <%= post_image.caption %></p>
             <p class="text-muted" style="font-size: 12px;">
-              <i class="fas fa-user"></i> By <%= link_to post_image.user.name, admin_user_path(post_image.user) %> | 
-              <%= link_to "#{post_image.post_comments.count} コメント", admin_post_image_path(post_image.id), class: "text-dark" %> 
+              <i class="fas fa-user"></i> By <%= post_image.user.name %> | 
+              <%= post_image.post_comments.count %> コメント 
             </p>
           </div>
         </div>

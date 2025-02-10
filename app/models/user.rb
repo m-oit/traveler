@@ -54,10 +54,6 @@ class User < ApplicationRecord
     def guest_user?
       email == GUEST_USER_EMAIL
     end
-
-    def admin?
-      is_admin
-    end
   
     def follow(user)
       active_relationships.create(followed_id: user.id)
