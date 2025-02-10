@@ -26,7 +26,7 @@ class User < ApplicationRecord
       profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
     end
     profile_image.variant(resize_to_limit: [width, height]).processed
-    end
+  end
 
     def self.search_for(content, method)
       if method == 'perfect'
@@ -68,4 +68,29 @@ class User < ApplicationRecord
 
   validates :name, presence: true
   validates :email, presence: true
+
+  before_destroy :transfer_group_ownership
+
+  private
+
+  def transfer_group_ownership
+    owned_groups.each do |group|
+
+      new_owner = group.group_users.where.not(user_id: id).first&.user
+  
+      if new_owner
+
+        group.update(owner_id: new_owner.id)
+      elsif group.group_users.count > 1
+
+        new_owner = group.group_users.where.not(user_id: id).first&.user
+        group.update(owner_id: new_owner.id) if new_owner
+      else
+
+        group.destroy
+      end
+    end
   end
+
+end
+
