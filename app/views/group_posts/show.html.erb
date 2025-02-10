@@ -68,7 +68,7 @@
           <% end %>
           
           <% if group_post_comment.user == current_user || @group_post.group.owner == current_user %>
-            <%= link_to "コメントを削除", group_group_post_group_post_comment_path(@group, @group_post, group_post_comment), method: :delete, data: { confirm: "本当にこのコメントを削除しますか?" }, class: "btn btn-danger btn-sm" %>
+            <%= link_to "コメントを削除", group_group_post_group_post_comment_path(@group, @group_post, group_post_comment), method: :delete, data: { confirm: "本当にこのコメントを削除しますか?" }, class: "btn btn-sm btn-outline-danger" %>
           <% end %>
         </div>
       <% end %>
