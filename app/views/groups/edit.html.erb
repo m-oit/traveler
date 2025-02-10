@@ -28,8 +28,6 @@
       <% if @group.post_image.attached? %>
         <div class="mb-2">
           <%= image_tag @group.post_image.variant(resize: "200x200"), class: 'img-fluid' %>
-          <br>
-          <%= check_box_tag :remove_image, "1" %> 画像を削除する
         </div>
       <% end %>
       <%= form.file_field :post_image, class: 'form-control' %>
