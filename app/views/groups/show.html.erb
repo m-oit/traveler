@@ -1,3 +1,15 @@
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
 <div class="group-header" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
   <% if @group.post_image.attached? %>
     <%= image_tag @group.post_image, alt: 'Group Image', class: 'group-thumbnail', style: 'width: 40px; height: 40px; object-fit: cover; border-radius: 50%;' %>

@@ -12,6 +12,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.where.not(id: User.guest.id)
+    @users = User.where.not(email: ['admin@example.com', 'guest@example.com'])
   end
   
   def edit
