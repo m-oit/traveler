@@ -9,7 +9,7 @@ class Group < ApplicationRecord
     has_many :event_notices, dependent: :destroy
     has_many :event_notice_emails, dependent: :destroy
     has_many :group_post_comments, dependent: :destroy
-    
+    has_many :members, through: :group_users, source: :user
   
     validates :name, presence: true
     validates :introduction, presence: true

@@ -9,6 +9,30 @@
 
 <p><strong>紹介文:</strong> <%= @group.introduction %></p>
 
+<p>グループオーナー<p>
+<div class="d-flex align-items-center">
+  <% if @group.owner.profile_image.attached? %>
+    <%= image_tag @group.owner.profile_image, alt: "#{@group.owner.name} Profile", class: "profile-thumbnail", style: "width: 40px; height: 40px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+  <% else %>
+    <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: "width: 40px; height: 40px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+  <% end %>
+  <p class="card-title mb-0"><%= @group.owner.name %></p>
+</div>
+
+<p>メンバー</p>
+<ul class="list-unstyled">
+  <% @group.members.each do |member| %>
+    <li class="d-flex align-items-center mb-2">
+      <% if member.profile_image.attached? %>
+        <%= image_tag member.profile_image, alt: "#{member.name} Profile", class: "profile-thumbnail", style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+      <% else %>
+        <%= image_tag 'no_image.jpg', alt: 'No image', class: 'profile-thumbnail', style: "width: 30px; height: 30px; object-fit: cover; margin-right: 10px; border-radius: 50%;" %>
+      <% end %>
+      <p class="mb-0" style="font-size: 1rem;"><%= member.name %></p>
+    </li>
+  <% end %>
+</ul>
+
 
 <h1 class="mb-4"><%= @group.name %> - 投稿された画像</h1>
 
