@@ -15,7 +15,7 @@ class BoardCommentsController < ApplicationController
 
   def destroy
     @board_comment = @group.board_comments.find(params[:id])
-    if @board_comment.user == current_user
+    if @board_comment.user == current_user || @group.owner == current_user
       @board_comment.destroy
       redirect_to group_path(@group), notice: 'コメントを削除しました。'
     else

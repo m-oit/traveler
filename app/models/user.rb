@@ -19,6 +19,7 @@ class User < ApplicationRecord
   has_many :event_notice_emails, dependent: :destroy
   has_many :owned_groups, class_name: 'Group', foreign_key: 'owner_id'
   has_many :group_favorites, dependent: :destroy
+  has_many :group_posts, dependent: :destroy
 
 
   def get_profile_image(width, height)
