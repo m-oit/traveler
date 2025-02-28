@@ -7,9 +7,10 @@ class GroupPostCommentsController < ApplicationController
     comment = current_user.group_post_comments.new(group_post_comment_params)
     comment.group_post_id = group_post.id 
     comment.group_id = params[:group_id]
-    if comment.save!
+    if comment.save
     redirect_to group_group_post_path(group_post.group, group_post)
   else
+    flash[:alert] = "コメントを入力してください。"
     redirect_to group_group_post_path(group_post.group, group_post)
   end
   end

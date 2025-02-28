@@ -15,7 +15,7 @@
 </div>
 <div class="mt-4 px-4">
   <p><strong>Title:</strong> <%= @post_image.title %></p>
-  <p><strong>Caption:</strong> <%= @post_image.caption %></p>
+  <p><strong>Caption:</strong> <%= simple_format(@post_image.caption, sanitize: true) %></p>
   <p><strong>User:</strong><div class="d-flex align-items-center mb-3">
     <%= link_to user_path(@post_image.user) do %>
       <%= image_tag @post_image.user.get_profile_image(50,50), class: "rounded-circle border me-2" %>
@@ -72,7 +72,7 @@
     <% if post_comment.user == current_user %>
       <div class="mb-3">
         <%= link_to "コメントを編集", edit_post_image_post_comment_path(post_comment.post_image, post_comment), class: "btn btn-sm btn-outline-primary" %>
-        <%= link_to "コメントを削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete, class: "btn btn-sm btn-outline-danger" %>
+        <%= link_to "コメントを削除", post_image_post_comment_path(post_comment.post_image, post_comment), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-outline-danger" %>
       </div>
     <% end %>
   <% end %>

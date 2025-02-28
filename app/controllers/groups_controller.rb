@@ -24,6 +24,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @board_comments = @group.board_comments.order(created_at: :desc) 
     @permits = @group.permits
     @group_posts = @group.group_posts
     @group_post = @group.group_posts.new

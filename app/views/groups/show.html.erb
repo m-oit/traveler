@@ -109,6 +109,7 @@
           </div>
           <p class="mb-2"><%= comment.body %></p>
           <% if comment.user == current_user || @group.owner == current_user %>
+          <p class="text-muted">投稿日時: <%= comment.created_at.strftime("%Y/%m/%d %H:%M") %></p>
             <div class="text-end">
               <%= link_to '削除', group_board_comment_path(@group, comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-outline-danger btn-sm' %>
             </div>
