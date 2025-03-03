@@ -23,7 +23,7 @@
  
  
 ## 設計書
-*  後程作成予定
+*  https://docs.google.com/spreadsheets/d/1G634mW3IXIQ_EKLn43XwJxwYZDa3iPDheqIKsU41x8Q/edit?usp=sharing
 
 ## 開発環境
 - OS：Linux(CentOS)
